@@ -1,0 +1,44 @@
+version: '3.1'
+services:
+# Instância do banco de dados
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: gamecenter
+    volumes:
+      - gamecenter-data:/data/db
+    networks:
+      - mongo-compose-network
+
+ # Interface Web para manusear dados
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: gamecenter
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: gamecenter
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - mongo-compose-network
+    
+
+
+# Criando o volume de dados para o docker-compose manter os dados
+volumes:
+  gamecenter-data:
+
+# Criando a rede para conexão entre o mongodb e o mongo-express
+networks: 
+    mongo-compose-network:
+      driver: bridge
