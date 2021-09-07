@@ -14,7 +14,7 @@
 	<name>apirest</name>
 	<description>API Rest for GameCenter</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>15</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
