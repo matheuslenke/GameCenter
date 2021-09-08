@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "gamecenter",
+    "slug": "gamecenter",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "gamecenter"
+}
