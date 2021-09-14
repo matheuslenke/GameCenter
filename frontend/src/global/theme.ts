@@ -12,6 +12,10 @@ export const theme = {
         secondary70: '#252323',
         secondary30: '#6B6565',
 
+        text100: '#FDFFFC',
+        text80: '#F2F0FF',
+        text70: '#EAEAEA',
+        text50: '#D0D0CF',
 
         overlay: 'rgba(0,0,0,0.7)',
         highlight: '#FDFFFC',

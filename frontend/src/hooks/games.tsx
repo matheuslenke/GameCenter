@@ -45,7 +45,6 @@ export type Game = {
   }[];
   platforms: {
     id: number;
-    category: number;
     name: string;
   }[];
   screenshots?: {
@@ -114,9 +113,25 @@ function GamesProvider({ children }: AuthProviderProps) {
       }],
       platforms: [{
         id: 6,
-        category: 4,
         name: "PC (Microsoft Windows)",
-      }],
+      },
+      {
+        id: 14,
+        name: "Mac",
+      },
+      {
+        id: 48,
+        name: "PlayStation 4",
+      },
+      {
+        id: 49,
+        name: "Xbox One",
+      },
+      {
+        id: 130,
+        name: "Nintendo Switch",
+      },
+    ],
       screenshots: [{
         id: 268555,
         image_id: "sc5r7v",
