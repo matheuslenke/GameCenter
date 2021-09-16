@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import {
-  View, Text
+  View, Text, Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -13,14 +13,21 @@ import { Background } from '../../components/Background';
 import DiscordImg from '../../assets/discord.svg';
 import AppleImg from '../../assets/appleLogo.svg';
 import GoogleImg from '../../assets/googleLogo.svg';
+import { useAuth } from '../../hooks/auth';
 
 
 export function SignIn(){
 
   const navigation = useNavigation();
+  const { signIn } = useAuth();
   
-  function handleSignIn() {
-      navigation.navigate('Home');
+  async function handleSignIn() {
+    try {
+      await signIn();
+      // navigation.navigate({ key: "Home"});
+    } catch (error) {
+      Alert.alert(error);
+    }
   }
 
   return (

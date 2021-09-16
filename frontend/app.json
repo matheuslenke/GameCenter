@@ -3,6 +3,7 @@
     "name": "gamecenter",
     "slug": "gamecenter",
     "version": "1.0.0",
+    "scheme": "gamecenter",
     "assetBundlePatterns": [
       "**/*"
     ]

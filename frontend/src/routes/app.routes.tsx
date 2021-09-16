@@ -11,7 +11,7 @@ const { Navigator, Screen } = createStackNavigator();
 export function AppRoutes() {
   return (
       <Navigator
-        initialRouteName="SignIn"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           cardStyle: {
@@ -19,10 +19,6 @@ export function AppRoutes() {
           },
         }}
       >
-        <Screen 
-          name="SignIn"
-          component={SignIn}
-        />
         <Screen 
           name="Home"
           component={Home}
