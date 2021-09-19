@@ -9,14 +9,21 @@ import { styles } from './styles';
 import { Background } from '../../components/Background';
 import { Profile } from '../../components/Profile';
 import { CategorySelect } from '../../components/CategorySelect';
-import { useGames } from '../../hooks/games';
+import { Game, useGames } from '../../hooks/games';
 import { GameCard } from '../../components/GameCard';
 import { useAuth } from '../../hooks/auth';
+import { useNavigation } from '@react-navigation/core';
 
 export function Home(){
   const [category, setCategory] = useState('');
   const { games, loading } = useGames();
   const { user } = useAuth();
+
+  const navigation = useNavigation();
+
+  function handleGameDetails(gameSelected: Game ) {
+    navigation.navigate('GameDetails', { gameSelected  });
+  }
 
   return (
     <Background>
@@ -34,7 +41,7 @@ export function Home(){
           renderItem={({item}) =>(
             <GameCard
               data={item} 
-              onPress={() => {} } 
+              onPress={() => { handleGameDetails(item) }} 
             />
             
           )}

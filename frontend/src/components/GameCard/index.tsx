@@ -24,33 +24,43 @@ type Props = RectButtonProps & {
 export function GameCard({ data , ...rest}: Props){
   const { on, line } = theme.colors;
 
-  const defineColor = data.rating > 50;
+  const { gameData } = data;
+
+  if (gameData === undefined) {
+    return (
+      <View>
+        <Text>Jogo sem dados</Text>
+      </View>
+    )
+  }
+
+  const defineColor = gameData.rating > 50;
   
   return (
     <RectButton {...rest}>
       <View style={styles.container}>
         <Image 
-          source={{uri: `${imageCoverUrl}${data.cover.image_id}.png`}}
+          source={{uri: `${imageCoverUrl}${gameData?.cover.image_id}.png`}}
           style={styles.cover}
           resizeMode="cover"
         />
 
         <View style={styles.content}>
           <View style={styles.heading} >
-            <Text style={styles.gameTitle}>{data.name}</Text>
+            <Text style={styles.gameTitle}>{gameData?.name}</Text>
             <Text style={[styles.gameRating, 
               {
                 color: defineColor ? on : line,
               }
-            ]}>{Math.floor(data.rating)}</Text>
+            ]}>{gameData?.rating ? Math.floor(gameData?.rating) : 'OFF'}</Text>
           </View>
           
           <View style={styles.data}>
-            <Text numberOfLines={2} style={styles.gameSummary}>{data.summary}</Text>
+            <Text numberOfLines={2} style={styles.gameSummary}>{gameData?.summary}</Text>
             <FlatList
               horizontal
               keyExtractor={ item => item.id}
-              data={data.platforms}
+              data={gameData?.platforms}
               style={styles.platforms}
               fadingEdgeLength={10} 
               showsHorizontalScrollIndicator={false}
@@ -64,7 +74,7 @@ export function GameCard({ data , ...rest}: Props){
             <View style={styles.genres}>
               <FlatList 
                 horizontal 
-                data={data.genres}
+                data={gameData?.genres}
                 keyExtractor={item => item.id}
                 style={styles.genres}
                 showsHorizontalScrollIndicator={false}
