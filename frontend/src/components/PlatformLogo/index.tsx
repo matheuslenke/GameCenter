@@ -15,11 +15,11 @@ import MacLogo from '../../assets/img/platforms/apple.svg';
 import { platforms } from '../../utils/platforms';
 
 type Props = {
-  platform: number;
+  platform: string;
 }
 
 export function PlatformLogo({ platform }: Props){
-  switch(platform) {
+  switch(Number(platform)) {
     case platforms.PC:
       return (
         <WindowsLogo width={25} height={25} />

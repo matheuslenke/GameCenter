@@ -24,6 +24,7 @@ export const theme = {
         on: '#32BD50',
 
         discord: '#7289da',
+        twitch: '#6441a5',
     },
 
     fonts: {

@@ -49,13 +49,13 @@ export const styles = StyleSheet.create({
   platforms: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: 6,
-    overflow: 'hidden'
+    marginTop: 10,
+    overflow: 'hidden',
   },
   platformLogo: {
     marginRight: 4,
   },
   genres: {
-
+    flex: 1,
   },
 });

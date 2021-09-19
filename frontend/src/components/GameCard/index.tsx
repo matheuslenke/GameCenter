@@ -5,7 +5,8 @@ import {
   View,
   Text,
   Image,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 import { Game } from '../../hooks/games';
 
@@ -14,6 +15,7 @@ import { styles } from './styles';
 import { imageCoverUrl } from '../../services/apiIGDB';
 import { PlatformLogo } from '../PlatformLogo';
 import { LinearGradient } from 'expo-linear-gradient';
+import { GenreTag } from '../GenreTag';
 
 type Props = RectButtonProps & {
   data: Game;
@@ -23,7 +25,6 @@ export function GameCard({ data , ...rest}: Props){
   const { on, line } = theme.colors;
 
   const defineColor = data.rating > 50;
-  const overflowPlatforms =  data.platforms.length > 6;
   
   return (
     <RectButton {...rest}>
@@ -33,6 +34,7 @@ export function GameCard({ data , ...rest}: Props){
           style={styles.cover}
           resizeMode="cover"
         />
+
         <View style={styles.content}>
           <View style={styles.heading} >
             <Text style={styles.gameTitle}>{data.name}</Text>
@@ -42,36 +44,35 @@ export function GameCard({ data , ...rest}: Props){
               }
             ]}>{Math.floor(data.rating)}</Text>
           </View>
+          
           <View style={styles.data}>
             <Text numberOfLines={2} style={styles.gameSummary}>{data.summary}</Text>
-            <ScrollView
+            <FlatList
               horizontal
+              keyExtractor={ item => item.id}
+              data={data.platforms}
               style={styles.platforms}
               fadingEdgeLength={10} 
               showsHorizontalScrollIndicator={false}
-            >
-              {
-                data.platforms.map(platform => (
-                  <View key={platform.id} style={styles.platformLogo}>
-                    <PlatformLogo platform={platform.id} />
+              renderItem={( { item} ) => (
+                  <View style={styles.platformLogo}>
+                    <PlatformLogo platform={item.id} />
                   </View>
-                ))
-              }
-            </ScrollView>
-            {
-               overflowPlatforms && (
-                <LinearGradient
-                  style={{flex: 1, position: 'relative', top: -37, right: 0, }}
-                  locations={[0.7, 0.95, 1]}
-                  start={[0,0]}
-                  end={[1,0]}
-                  colors={['transparent', '#252323']}
-                  pointerEvents={'none'}
-                />
-              )
-            }
+              )}
+            >
+            </FlatList>
             <View style={styles.genres}>
-
+              <FlatList 
+                horizontal 
+                data={data.genres}
+                keyExtractor={item => item.id}
+                style={styles.genres}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ marginTop: 7}}
+                renderItem={ ({item}) => (
+                    <GenreTag id={item.id} />
+                )}
+              />
             </View>
           </View>
         </View>

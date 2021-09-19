@@ -30,25 +30,25 @@ export type Game = {
     url: string;
   }[];
   game_modes: {
-    id: number;
+    id: string;
     name: string;
   }[];
   genres: {
-    id: number;
+    id: string;
     name: string;
   }[];
   involved_companies: {
-    id: number;
+    id: string;
     company: {
       name: string;
     }
   }[];
   platforms: {
-    id: number;
+    id: string;
     name: string;
   }[];
   screenshots?: {
-    id: number;
+    id: string;
     image_id: string;
   }[];
   rating: number;
@@ -56,7 +56,7 @@ export type Game = {
   summary: string;
   url: string;
   websites: {
-    id: number;
+    id: string;
     url: string;
   }[];
 }
@@ -89,51 +89,55 @@ function GamesProvider({ children }: AuthProviderProps) {
       },
       first_release_date: 1600300800,
       game_modes: [{
-        id: 1,
+        id: '1',
         name: "Single player"
       }],
       genres: [{
-        id: 12,
+        id: '12',
         name: 'Role-playing (RPG)',
       },
       {
-        id: 25,
+        id: '25',
         name: "Hack and slash/Beat \'em up\'",
       },
       {
-        id: 25,
+        id: '31',
         name: "Hack and slash/Beat \'em up\'",
-      }
+      },
+      {
+        id: '33',
+        name: "Hack and slash/Beat \'em up\'",
+      },
     ],
       involved_companies: [{
-        id: 108827,
+        id: '108827',
         company: {
           name: "Supergiant Games",
         }
       }],
       platforms: [{
-        id: 6,
+        id: '6',
         name: "PC (Microsoft Windows)",
       },
       {
-        id: 14,
+        id: '14',
         name: "Mac",
       },
       {
-        id: 48,
+        id: '48',
         name: "PlayStation 4",
       },
       {
-        id: 49,
+        id: '49',
         name: "Xbox One",
       },
       {
-        id: 130,
+        id: '130',
         name: "Nintendo Switch",
       },
     ],
       screenshots: [{
-        id: 268555,
+        id: '268555',
         image_id: "sc5r7v",
       }],
       rating: 92.5333348092417,

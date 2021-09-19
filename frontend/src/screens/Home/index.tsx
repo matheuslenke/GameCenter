@@ -33,7 +33,6 @@ export function Home(){
           style={ styles.games } 
           renderItem={({item}) =>(
             <GameCard
-              key={item.id}
               data={item} 
               onPress={() => {} } 
             />
