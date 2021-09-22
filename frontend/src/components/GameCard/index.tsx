@@ -5,7 +5,6 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   FlatList
 } from 'react-native';
 import { Game } from '../../hooks/games';
@@ -14,78 +13,89 @@ import { theme } from '../../global/theme';
 import { styles } from './styles';
 import { imageCoverUrl } from '../../services/apiIGDB';
 import { PlatformLogo } from '../PlatformLogo';
-import { LinearGradient } from 'expo-linear-gradient';
 import { GenreTag } from '../GenreTag';
+import { GameRating } from '../GameRating';
+import { PlaceholderCard } from './PlaceholderCard';
 
 type Props = RectButtonProps & {
   data: Game;
 }
 
-export function GameCard({ data , ...rest}: Props){
-  const { on, line } = theme.colors;
-
-  const { gameData } = data;
-
-  if (gameData === undefined) {
-    return (
-      <View>
-        <Text>Jogo sem dados</Text>
-      </View>
-    )
+export function GameCard({ data , ...rest}: Props) {
+  if(!data) {
+    return <PlaceholderCard />
   }
-
-  const defineColor = gameData.rating > 50;
+  const { gameData } = data;
   
   return (
     <RectButton {...rest}>
       <View style={styles.container}>
-        <Image 
-          source={{uri: `${imageCoverUrl}${gameData?.cover.image_id}.png`}}
-          style={styles.cover}
-          resizeMode="cover"
-        />
+        {
+          gameData?.cover ?
+         ( <Image 
+            source={{uri: `${imageCoverUrl}${gameData?.cover.image_id}.png`}}
+            style={styles.cover}
+            resizeMode="cover"
+          />) :
+          (
+            <View style={styles.noCover}>
+              <Text style={styles.noCoverText}>Jogo sem capa</Text>
+            </View>
+          )
+        }
 
-        <View style={styles.content}>
-          <View style={styles.heading} >
-            <Text style={styles.gameTitle}>{gameData?.name}</Text>
-            <Text style={[styles.gameRating, 
+        {
+          gameData ? (
+            <View style={styles.content}>
+            <View style={styles.heading} >
+              <Text numberOfLines={2} style={styles.gameTitle}>{gameData.name}</Text>
               {
-                color: defineColor ? on : line,
+                gameData.rating &&
+                <GameRating 
+                  rating={gameData.rating}
+                />
               }
-            ]}>{gameData?.rating ? Math.floor(gameData?.rating) : 'OFF'}</Text>
-          </View>
-          
-          <View style={styles.data}>
-            <Text numberOfLines={2} style={styles.gameSummary}>{gameData?.summary}</Text>
-            <FlatList
-              horizontal
-              keyExtractor={ item => item.id}
-              data={gameData?.platforms}
-              style={styles.platforms}
-              fadingEdgeLength={10} 
-              showsHorizontalScrollIndicator={false}
-              renderItem={( { item} ) => (
-                  <View style={styles.platformLogo}>
-                    <PlatformLogo platform={item.id} />
-                  </View>
-              )}
-            >
-            </FlatList>
-            <View style={styles.genres}>
-              <FlatList 
-                horizontal 
-                data={gameData?.genres}
-                keyExtractor={item => item.id}
-                style={styles.genres}
+            </View>
+            
+            <View style={styles.data}>
+              <Text numberOfLines={2} style={styles.gameSummary}>{gameData?.summary}</Text>
+              <FlatList
+                horizontal
+                keyExtractor={ item => String(item.id)}
+                data={gameData?.platforms}
+                style={styles.platforms}
+                fadingEdgeLength={10} 
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ marginTop: 7}}
-                renderItem={ ({item}) => (
-                    <GenreTag id={item.id} />
+                renderItem={( { item} ) => (
+                    <View style={styles.platformLogo}>
+                      <PlatformLogo platform={item.id} />
+                    </View>
                 )}
-              />
+              >
+              </FlatList>
+              <View style={styles.genres}>
+                <FlatList 
+                  horizontal 
+                  data={gameData?.genres}
+                  keyExtractor={item => String(item.id)}
+                  style={styles.genres}
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ marginTop: 7}}
+                  renderItem={ ({item}) => (
+                      <GenreTag id={item.id} />
+                  )}
+                />
+              </View>
             </View>
           </View>
-        </View>
+          ) : 
+          (
+            <View style={styles.content}>
+              <Text style={styles.noCoverText}>Jogo não selecionado</Text>
+            </View>
+          )
+        }
+ 
       </View>
     </RectButton>
   );

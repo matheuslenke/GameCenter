@@ -15,6 +15,7 @@ import TwitchImg from '../../assets/img/social/twitchWhite.svg';
 // import AppleImg from '../../assets/appleLogo.svg';
 // import GoogleImg from '../../assets/googleLogo.svg';
 import { useAuth } from '../../hooks/auth';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export function SignIn(){
@@ -34,6 +35,12 @@ export function SignIn(){
     <Background>
       <View style={styles.container}>
         <View>
+          <Ionicons
+            name="game-controller"
+            size={50}
+            color={'white'}
+            style={[{justifyContent: 'center'}]}
+          />
           <View style={styles.logo} >
             <Text style={[styles.title, {color: theme.colors.highlight}]}>
                 Game

@@ -15,6 +15,8 @@ import { imageCoverUrl } from '../../services/apiIGDB';
 import { useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GamePlayingStatus } from '../../components/GamePlayingStatus';
+import { GameRating } from '../../components/GameRating';
+import { BackButton } from '../../components/BackButton';
 
 type Params = {
   gameSelected: Game;
@@ -37,26 +39,38 @@ export function GameDetails(){
 
   return (
     <Background>
-      <ScrollView 
-        style={styles.container}
-        contentOffset={{ x: 0, y: -30 }}
-      >
-        <View style={styles.header}>
-          <Image 
-            source={{ uri: `${imageCoverUrl}${gameData.cover.image_id}.png` }}
-            style={styles.cover}
+      <View style={styles.container}>
+        <View style={styles.backButton}>
+          <BackButton />
+        </View>
+        <ScrollView 
+          contentOffset={{ x: 0, y: -30 }}
+        >
+          <View style={styles.header}>
+            <Image 
+              source={{ uri: `${imageCoverUrl}${gameData.cover.image_id}.png` }}
+              style={styles.cover}
+            />
+            <View style={styles.headerName}>
+              <Text style={styles.title} >{gameData.name}</Text>
+              {
+                gameData.rating &&
+                <View style={styles.rating}>
+                  <GameRating rating={gameData.rating}/>
+                </View>
+              }
+            </View>
+          </View>
+          <View style={{marginHorizontal: 20}}>
+            <GamePlayingStatus data={gameSelected} />
+          </View>
+          <View style={styles.gameContent}>
+            <GameProps 
+              data={gameSelected}
           />
-          <Text style={styles.title} >{gameData.name}</Text>
-        </View>
-        <View style={{marginHorizontal: 20}}>
-          <GamePlayingStatus data={gameSelected} />
-        </View>
-        <View style={styles.gameContent}>
-          <GameProps 
-            data={gameSelected}
-        />
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+      </View>
     </Background>
   );
 }

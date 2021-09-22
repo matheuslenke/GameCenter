@@ -44,7 +44,7 @@ export type GameData = {
     }
   }[];
   platforms: {
-    id: string;
+    id: number;
     name: string;
   }[];
   screenshots?: {

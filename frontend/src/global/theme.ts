@@ -24,6 +24,7 @@ export const theme = {
         heading: '#DDE3F0',
         line: '#991F36',
         on: '#32BD50',
+        warn: '#EBD564',
 
         discord: '#7289da',
         twitch: '#6441a5',

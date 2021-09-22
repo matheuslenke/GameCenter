@@ -6,7 +6,7 @@ const BORDER_RADIUS = 10;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 150,
+    height: 170,
     backgroundColor: theme.colors.secondary70,
     flexDirection: 'row',
     borderRadius: BORDER_RADIUS
@@ -25,7 +25,9 @@ export const styles = StyleSheet.create({
   gameTitle: {
     fontSize: 18,
     fontFamily: theme.fonts.title700,
-    color: theme.colors.highlight
+    color: theme.colors.highlight,
+    width: '90%'
+    // marginRight: 8,
   },
   heading:{
     flexDirection: 'row',
@@ -58,4 +60,15 @@ export const styles = StyleSheet.create({
   genres: {
     flex: 1,
   },
+  noCover: {
+    height: '100%',
+    width: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.secondary30
+  },
+  noCoverText: {
+    fontFamily: theme.fonts.title500,
+    color: theme.colors.highlight
+  }
 });

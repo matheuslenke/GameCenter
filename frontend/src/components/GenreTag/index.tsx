@@ -15,7 +15,7 @@ type Props = {
 
 export function GenreTag({ id }: Props) { 
 
-  const genre = genres.find( item => item.id === id);
+  const genre = genres.find( item => item.id === String(id));
   const backgroundColor = genre !== undefined ? genre?.backgroundColor : '#FFFF'
   const fontColor = genre !== undefined ? genre?.fontColor : theme.colors.primary90
 
