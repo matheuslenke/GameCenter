@@ -13,11 +13,12 @@ import { Game, useGames } from '../../hooks/games';
 import { GameCard } from '../../components/GameCard';
 import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/core';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export function Home(){
   const [category, setCategory] = useState('');
   const { games, loading } = useGames();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const navigation = useNavigation();
 
@@ -28,7 +29,10 @@ export function Home(){
   return (
     <Background>
       <View style={styles.container}>
-        <Profile user_name={user.display_name} user_avatar={user.avatar} />
+        <TouchableOpacity onPress={() => { signOut() }}>
+          <Profile user_name={user.display_name} user_avatar={user.avatar} />
+
+        </TouchableOpacity>
         <Text style={styles.title}> Meus jogos </Text>
         <CategorySelect 
           categorySelected={category}
@@ -40,7 +44,7 @@ export function Home(){
           style={ styles.games } 
           renderItem={({item}) =>(
             <GameCard
-              data={item} 
+              game={item} 
               onPress={() => { handleGameDetails(item) }} 
             />
             

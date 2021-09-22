@@ -51,7 +51,7 @@ public class JWTValidateFilter extends BasicAuthenticationFilter {
         if (usuario == null) {
             return null;
         }
-
+        System.out.println(usuario);
         return new UsernamePasswordAuthenticationToken(usuario, null, new ArrayList<>());
     }
 

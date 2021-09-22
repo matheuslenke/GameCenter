@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: getStatusBarHeight() + 20,
   },
+  scrollView: {
+    flex: 1,
+  },
   title: {
     fontSize: 24,
     fontFamily: theme.fonts.title700,

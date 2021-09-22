@@ -35,12 +35,13 @@ export function SignIn(){
     <Background>
       <View style={styles.container}>
         <View>
-          <Ionicons
-            name="game-controller"
-            size={50}
-            color={'white'}
-            style={[{justifyContent: 'center'}]}
-          />
+          <View style={[{justifyContent: 'center', alignItems: 'center', marginBottom: 0}]}>
+            <Ionicons
+              name="game-controller"
+              size={80}
+              color={'white'}
+            />
+          </View>
           <View style={styles.logo} >
             <Text style={[styles.title, {color: theme.colors.highlight}]}>
                 Game

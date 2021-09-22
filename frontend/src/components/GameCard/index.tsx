@@ -7,7 +7,7 @@ import {
   Image,
   FlatList
 } from 'react-native';
-import { Game } from '../../hooks/games';
+import { Game, GameData } from '../../hooks/games';
 
 import { theme } from '../../global/theme';
 import { styles } from './styles';
@@ -18,14 +18,20 @@ import { GameRating } from '../GameRating';
 import { PlaceholderCard } from './PlaceholderCard';
 
 type Props = RectButtonProps & {
-  data: Game;
+  data?: GameData;
+  game?: Game;
 }
 
-export function GameCard({ data , ...rest}: Props) {
-  if(!data) {
+export function GameCard({ data, game , ...rest}: Props) {
+  let gameData = undefined;
+
+  if(data === undefined && game === undefined) {
     return <PlaceholderCard />
+  } else if(data !== undefined) {
+    gameData = data;
+  } else if(game !== undefined) {
+    gameData = game.gameData;
   }
-  const { gameData } = data;
   
   return (
     <RectButton {...rest}>

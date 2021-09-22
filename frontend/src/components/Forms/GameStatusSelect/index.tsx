@@ -9,6 +9,7 @@ import { Picker } from '@react-native-community/picker'
 
 import { styles } from './styles';
 
+import { enumCategory } from '../../../screens/CreateGame'
 
 interface Props {
   selectedValue: string;
@@ -16,7 +17,7 @@ interface Props {
     label: string;
     value: string;
   }[];
-  setSelectedValue: Dispatch<SetStateAction<string>>;
+  setSelectedValue: Dispatch<SetStateAction<enumCategory>>;
 }
 
 export function GameStatusSelect({ selectedValue, options, setSelectedValue}: Props){
@@ -25,7 +26,7 @@ export function GameStatusSelect({ selectedValue, options, setSelectedValue}: Pr
       <Picker 
         itemStyle={{fontSize: 10, height: 150}}
         selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => {setSelectedValue(String(itemValue))}}
+        onValueChange={(itemValue, itemIndex) => {setSelectedValue(String(itemValue) as enumCategory)}}
       >
         {
           options.map(option => (

@@ -5,6 +5,7 @@ import br.ufes.gamecenter.apirest.repository.UserRepository;
 import br.ufes.gamecenter.apirest.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,17 @@ public class UserController {
     public UserController(UserRepository repository, PasswordEncoder encoder) {
         this.userRepository = repository;
         this.encoder = encoder;
+    }
+
+    @GetMapping("/@me")
+    public ResponseEntity<Object> listOne(Authentication authentication) {
+        Optional<User> user = userRepository.findByLogin(authentication.getPrincipal().toString());
+
+        if (!user.isEmpty()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado!");
+        }
     }
 
     @GetMapping("/listall")

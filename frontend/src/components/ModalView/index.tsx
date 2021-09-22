@@ -18,7 +18,6 @@ export function ModalView({ children, closeModal, ...rest } : Props) {
       statusBarTranslucent
       {...rest}
     >
-      <TouchableWithoutFeedback onPress={closeModal}>
         <View style={styles.overlay}>
           <View style={styles.container}>
             <Background>
@@ -27,7 +26,6 @@ export function ModalView({ children, closeModal, ...rest } : Props) {
             </Background>
           </View>
         </View>
-      </TouchableWithoutFeedback>
 
     </Modal>
   );

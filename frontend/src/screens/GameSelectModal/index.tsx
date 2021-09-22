@@ -16,15 +16,15 @@ import { Load } from '../../components/Load'
 
 interface Props {
   gameName: string;
-  setGame: (game: Game) => void;
+  setGame: (game: GameData) => void;
   closeSelectGame: () => void;
 }
 
 export function GameSelectModal({ gameName, setGame, closeSelectGame }: Props) {
-  const [games, setGames] = useState<Game[]>([])
+  const [games, setGames] = useState<GameData[]>([])
   const [loading, setLoading] = useState(false)
 
-  function handleSelectGame(game: Game) {
+  function handleSelectGame(game: GameData) {
     setGame(game)
     closeSelectGame()
   }
@@ -42,16 +42,8 @@ export function GameSelectModal({ gameName, setGame, closeSelectGame }: Props) {
     try {
       const response = await apiIGDB.post('games', searchText) ;
       const gamesData = response.data as GameData[]
-      const games =  gamesData.map((game, index) => {
-        return {
-          id: String(index),
-          status: 'WISHLIST',
-          igdb_id: game.id,
-          gameData: game
-        } as Game
-      })
 
-      setGames(games);
+      setGames(gamesData);
     } catch (error) {
       console.log(error)
     } finally {
@@ -84,7 +76,6 @@ export function GameSelectModal({ gameName, setGame, closeSelectGame }: Props) {
               onPress={() => { handleSelectGame(item) }} 
               data={item}
             />
-            // <Text>{item.name}</Text>
           )}
         />
         )}

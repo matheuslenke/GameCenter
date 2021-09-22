@@ -1,4 +1,8 @@
 
+export type GameCategoryType = {
+  category: 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED'
+}
+
 export const categories = [
   { id: '1', title: 'Wishlist', icon: 'cart'},
   { id: '2', title: 'Biblioteca', icon: 'library'},

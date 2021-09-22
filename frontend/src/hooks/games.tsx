@@ -70,10 +70,19 @@ export type Game = {
   gameData: GameData | undefined;
 }
 
+export type GameRequest = {
+  igdb_id: string;
+  status: 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED'
+  startedAt: Date | undefined;
+  finishedAt: Date | undefined;
+  gameData: GameData;
+}
+
 
 type AuthContextData = {
   games: Game[];
   loading: boolean;
+  addNewGame: (game: GameRequest) => void;
 }
 
 type AuthProviderProps = {
@@ -168,6 +177,10 @@ function GamesProvider({ children }: AuthProviderProps) {
   ]);
   const [loading, setLoading] = useState(false);
 
+  async function addNewGame(game: GameRequest) {
+    // Conectar com API
+  }
+
 
   async function loadUserStorageData() {
     // const storage = await AsyncStorage.getItem(COLLECTION_USERS);
@@ -188,6 +201,7 @@ function GamesProvider({ children }: AuthProviderProps) {
     <GamesContext.Provider value={{
       games,
       loading,
+      addNewGame,
     }} >
       { children }
     </GamesContext.Provider>

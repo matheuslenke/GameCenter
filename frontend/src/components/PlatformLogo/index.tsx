@@ -20,17 +20,6 @@ type Props = {
 }
 
 export function PlatformLogo({ platform }: Props){
-  /*
-  VR: 162,
-  STEAMVR: 163,
-
-  NINTENDOSWITCH: 130,
-  NINTENDODSI: 159,
-  NINTENDO64: 4,
-  NINTENDO3DS: 37,
-  NINTENDODS: 20,
-*/
-
 
   switch(platform) {
     case platforms.PC:
@@ -53,13 +42,12 @@ export function PlatformLogo({ platform }: Props){
     return (
       <SwitchLogo width={25} height={25} />
     )
-    case platforms.NINTENDO3DS || platforms.NINTENDODSI || platforms.NINTENDO64 || platforms.NINTENDODS:
+    /*case platforms.NINTENDO3DS || platforms.NINTENDODSI || platforms.NINTENDO64 || platforms.NINTENDODS:
     return(
-      <View style={{flex: 1, }}>
-        <Nintendo width={60} height={25}/>
-
+      <View style={{flex: 1}}>
+        <Nintendo width={60} height={40}/>
       </View>
-    )
+    )*/
     default:
       return (
         <View />

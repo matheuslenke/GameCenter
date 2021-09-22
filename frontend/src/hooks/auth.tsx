@@ -21,6 +21,7 @@ import { COLLECTION_USERS } from '../config/database';
 import { twitchApi, twitchClientId } from '../services/twitchApi'
 import { makeUrl } from 'expo-linking';
 import { Alert } from 'react-native';
+import { api } from '../services/api';
 
 type User = {
   id: string;
@@ -28,6 +29,17 @@ type User = {
   display_name: string;
   avatar: string;
   email: string;
+  token: string;
+  localApi?: ApiUser
+}
+type ApiUser = {
+  id: string;
+  login: string;
+  epicCode: string;
+  nintendoSwitchCode: string;
+  psnCode: string;
+  steamCode: string;
+  xboxCode: string;
   token: string;
 }
 
@@ -62,6 +74,22 @@ type TwitchUserResponse = {
   }[]
 }
 
+type LocalApiRegisterResponse = {
+  data: {
+    id: string;
+    login: string;
+    epicCode: string;
+    nintendoSwitchCode: string;
+    psnCode: string;
+    steamCode: string;
+    xboxCode: string;
+  }
+}
+
+type LocalApiSignInResponse = {
+
+}
+
 export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
@@ -79,12 +107,50 @@ function AuthProvider({ children }: AuthProviderProps) {
         email: userInfo.email,
         login: userInfo.login,
         display_name: userInfo.display_name,
-        token: twitchToken
+        token: twitchToken,
       }
       setUser(userData)
       await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData))
+      return userData
     } catch ( error ) {
       Alert.alert('Error ao pegar dados da Twitch')
+    }
+  }
+
+  async function signInLocalAPI(userData: User) {
+    try {
+      const login = await api.post('/login', {
+        login: userData.email,
+        password: userData.display_name
+      })
+
+      if (login.status === 200) {
+        console.log('conseguiu logar')
+        api.defaults.headers.authorization = `Bearer ${login.data}`
+
+      } else {
+        console.log('não conseguiu logar')
+        await api.post('/user', {
+          login: userData.email,
+          password: userData.display_name
+        })
+
+        const login = await api.post('/login', {
+          login: userData.email,
+          password: userData.display_name
+        })
+        api.defaults.headers.authorization = `Bearer ${login.data}`
+      }
+      // Pegando dados do usuário na API
+      const userApiData = await api.get('/api/user/@me');
+      userData.localApi = userApiData.data as ApiUser
+      userData.localApi.token = `Bearer ${login.data}`
+
+      await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData))
+      console.log('Terminou de logar!', userData)
+
+    } catch (error) {
+      Alert.alert(error as string)
     }
   }
 
@@ -103,7 +169,9 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       if(type === "success" && !params.error){
         twitchApi.defaults.headers.authorization = `Bearer ${params.access_token}`;
-        await getTwitchUserInformation(params.access_token)
+        const userData = await getTwitchUserInformation(params.access_token) as User
+
+        signInLocalAPI(userData)
       }
     } catch ( error ) {
       throw new Error('Erro ao fazer a autenticação.');
@@ -114,8 +182,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signOut() {
-    // await AsyncStorage.removeItem(COLLECTION_USERS)
-    // setUser({} as User)
+    await AsyncStorage.removeItem(COLLECTION_USERS)
+    setUser({} as User)
   }
 
   async function loadUserStorageData() {
@@ -124,6 +192,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     if (storage) {
       const userLogged = JSON.parse(storage) as User;
       twitchApi.defaults.headers.authorization = `Bearer ${userLogged.token}`
+      api.defaults.headers.authorization = `Bearer ${userLogged.localApi?.token}`
       setUser(userLogged)
     }
   }
