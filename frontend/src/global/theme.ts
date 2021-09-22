@@ -11,15 +11,23 @@ export const theme = {
         secondary80: '#1E1C1D',
         secondary70: '#252323',
         secondary30: '#6B6565',
+        
+        brown: '#413C3C',
 
+        text100: '#FDFFFC',
+        text80: '#F2F0FF',
+        text70: '#EAEAEA',
+        text50: '#D0D0CF',
 
         overlay: 'rgba(0,0,0,0.7)',
         highlight: '#FDFFFC',
         heading: '#DDE3F0',
         line: '#991F36',
         on: '#32BD50',
+        warn: '#EBD564',
 
         discord: '#7289da',
+        twitch: '#6441a5',
     },
 
     fonts: {

@@ -1,8 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 
 import {
-  Image,
-  ImageProps,
   View,
   Text
 } from 'react-native';
@@ -14,16 +12,31 @@ import { styles } from './styles';
 type Props = RectButtonProps & {
   title: string;
   icon: React.FC<SvgProps>;
-  buttonType: 'discord' | 'other'
+  buttonType: 'discord' | 'twitch' | 'other'
 }
 
 export function ButtonIcon({title, icon: Icon, buttonType, ...rest}: Props){
+  let buttonStyle = styles.buttonOther;
+  let titleStyle = styles.titleOther;
+  switch (buttonType) {
+    case 'discord':
+      buttonStyle = styles.buttonDiscord
+      titleStyle = styles.titleDiscord
+      break;
+    case 'twitch':
+      buttonStyle = styles.buttonTwitch
+      titleStyle = styles.titleTwitch
+      break;
+    default:
+      break;
+  }
+
   return (
     <View>
       <RectButton 
         style={[
           styles.container,
-          buttonType === 'discord' ? styles.buttonDiscord : styles.buttonOther
+          buttonStyle,
         ]}
         {...rest}
       >
@@ -34,7 +47,7 @@ export function ButtonIcon({title, icon: Icon, buttonType, ...rest}: Props){
             />
         </View>
 
-        <Text style={buttonType === 'discord' ? styles.titleDiscord : styles.titleOther}>
+        <Text style={titleStyle}>
           {title}
         </Text>
       </RectButton>

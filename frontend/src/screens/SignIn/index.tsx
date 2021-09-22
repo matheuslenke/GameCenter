@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import {
-  View, Text
+  View, Text, Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -10,23 +10,37 @@ import { theme } from '../../global/theme';
 import { ButtonIcon } from '../../components/ButtonIcon';
 import { Background } from '../../components/Background';
 
-import DiscordImg from '../../assets/discord.svg';
-import AppleImg from '../../assets/appleLogo.svg';
-import GoogleImg from '../../assets/googleLogo.svg';
+// import DiscordImg from '../../assets/discord.svg';
+import TwitchImg from '../../assets/img/social/twitchWhite.svg';
+// import AppleImg from '../../assets/appleLogo.svg';
+// import GoogleImg from '../../assets/googleLogo.svg';
+import { useAuth } from '../../hooks/auth';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export function SignIn(){
 
   const navigation = useNavigation();
+  const { signIn } = useAuth();
   
-  function handleSignIn() {
-      navigation.navigate('Home');
+  async function handleSignIn() {
+    try {
+      await signIn();
+    } catch (error) {
+      Alert.alert(error);
+    }
   }
 
   return (
     <Background>
       <View style={styles.container}>
         <View>
+          <Ionicons
+            name="game-controller"
+            size={50}
+            color={'white'}
+            style={[{justifyContent: 'center'}]}
+          />
           <View style={styles.logo} >
             <Text style={[styles.title, {color: theme.colors.highlight}]}>
                 Game
@@ -41,25 +55,12 @@ export function SignIn(){
         </View>
 
         <View style={styles.buttons}>
-          <ButtonIcon
-            title="Entrar com Google"
-            onPress={handleSignIn}
-            icon={GoogleImg}
-            buttonType="other"
-          />
-           <View style={{height: 18}} />
-           <ButtonIcon
-            title="Entrar com Apple"
-            onPress={handleSignIn}
-            icon={AppleImg}
-            buttonType="other"
-          />
           <View style={{height: 18}} />
            <ButtonIcon
-            title="Entrar com Discord"
+            title="Entrar com Twitch"
             onPress={handleSignIn}
-            icon={DiscordImg}
-            buttonType="discord"
+            icon={TwitchImg}
+            buttonType="twitch"
           />
         </View>
       </View>

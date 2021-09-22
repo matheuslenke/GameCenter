@@ -8,11 +8,16 @@ import { Avatar } from '../Avatar';
 
 import { styles } from './styles';
 
-export function Profile(){
+type Props = {
+  user_name: string;
+  user_avatar: string;
+}
+
+export function Profile( { user_name, user_avatar }: Props ){
   return (
     <View style={styles.container}>
       
-      <Avatar urlImage="https://github.com/matheuslenke.png" />
+      <Avatar urlImage={user_avatar} />
       <View>
         <View style={styles.user}>
           <Text style={styles.greeting}>
@@ -20,7 +25,7 @@ export function Profile(){
           </Text>
 
           <Text style={styles.username}>
-            Matheus
+            { user_name }
           </Text>
         </View>
         <Text style={styles.message}>

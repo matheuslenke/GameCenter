@@ -23,7 +23,7 @@ export function CategorySelect({categorySelected, setCategory}: Props){
     >
          {
            categories.map(category => (
-            <View style={{paddingRight: 10}}>
+            <View style={{paddingRight: 10}} key={category.id} >
               <Category 
                 title={category.title} icon={category.icon}
                 checked={category.id === categorySelected}
