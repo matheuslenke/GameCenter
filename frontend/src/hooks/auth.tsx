@@ -125,11 +125,10 @@ function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (login.status === 200) {
-        console.log('conseguiu logar')
         api.defaults.headers.authorization = `Bearer ${login.data}`
 
       } else {
-        console.log('não conseguiu logar')
+        // User needs to register
         await api.post('/user', {
           login: userData.email,
           password: userData.display_name
@@ -147,7 +146,6 @@ function AuthProvider({ children }: AuthProviderProps) {
       userData.localApi.token = `Bearer ${login.data}`
 
       await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData))
-      console.log('Terminou de logar!', userData)
 
     } catch (error) {
       Alert.alert(error as string)

@@ -18,6 +18,12 @@ const { RESPONSE_TYPE } = process.env;
 // import { api } from '../services/api';
 // import { COLLECTION_USERS } from '../configs/database';
 import { useEffect } from 'react';
+import { api } from '../services/api';
+import { apiIGDB } from '../services/apiIGDB';
+import axios, { AxiosResponse } from 'axios';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { COLLECTION_GAMES } from '../config/database';
 
 export type GameData = {
   id: string;
@@ -44,7 +50,7 @@ export type GameData = {
     }
   }[];
   platforms: {
-    id: number;
+    id: string;
     name: string;
   }[];
   screenshots?: {
@@ -61,147 +67,181 @@ export type GameData = {
   }[];
 }
 
+export type enumGameStatusCategory = 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED'
+
 export type Game = {
   id: string;
-  igdb_id: string;
-  status: 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED'
-  startedAt: Date | undefined;
-  finishedAt: Date | undefined;
-  gameData: GameData | undefined;
-}
-
-export type GameRequest = {
-  igdb_id: string;
-  status: 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED'
-  startedAt: Date | undefined;
-  finishedAt: Date | undefined;
-  gameData: GameData;
+  gameIgdbId: string;
+  gameStatus: enumGameStatusCategory
+  gameStartedPlayingDate: Date | undefined;
+  gameFinishedPlayingDate: Date | undefined;
+  gameData?: GameData;
 }
 
 
-type AuthContextData = {
+type GamesContextData = {
   games: Game[];
   loading: boolean;
-  addNewGame: (game: GameRequest) => void;
+  addNewGame: (game: Game) => void;
+  loadGamesFromGameCenter: () => void;
+  deleteGame: (game: Game) => void;
+  updateGame: (data: UpdateGameParams) => void;
+  getGameById: (id: string) => Game | undefined;
 }
 
-type AuthProviderProps = {
+type GamesProviderProps = {
   children: ReactNode;
 }
 
-type AuthorizationResponse = AuthSession.AuthSessionResult & {
-  params: {
-    access_token: string;
-    error?: string;
-  }
+type UpdateGameParams = {
+  game: Game;
+  status: enumGameStatusCategory;
+  gameStartedPlayingDate?: Date;
+  gameFinishedPlayingDate?: Date;
 }
 
-export const GamesContext = createContext({} as AuthContextData);
+export const GamesContext = createContext({} as GamesContextData);
 
-function GamesProvider({ children }: AuthProviderProps) {
-  const [games, setGames] = useState<Game[]>([
-    {  
-      id: '1',
-      igdb_id: '113112',
-      status: 'ABANDONED',
-      startedAt: new Date('2021-08-21'),
-      finishedAt: new Date(),
-      gameData: {
-        id: '113112',
-        cover: {
-          image_id: 'co39vc'
-        },
-        first_release_date: 1600300800,
-        game_modes: [{
-          id: '1',
-          name: "Single player"
-        }],
-        genres: [{
-          id: '12',
-          name: 'Role-playing (RPG)',
-        },
-        {
-          id: '25',
-          name: "Hack and slash/Beat \'em up\'",
-        },
-        {
-          id: '31',
-          name: "Hack and slash/Beat \'em up\'",
-        },
-        {
-          id: '33',
-          name: "Hack and slash/Beat \'em up\'",
-        },
-      ],
-        involved_companies: [{
-          id: '108827',
-          company: {
-            name: "Supergiant Games",
-          }
-        }],
-        platforms: [{
-          id: '6',
-          name: "PC (Microsoft Windows)",
-        },
-        {
-          id: '14',
-          name: "Mac",
-        },
-        {
-          id: '48',
-          name: "PlayStation 4",
-        },
-        {
-          id: '49',
-          name: "Xbox One",
-        },
-        {
-          id: '130',
-          name: "Nintendo Switch",
-        },
-      ],
-        screenshots: [{
-          id: '268555',
-          image_id: "sc5r7v",
-        }],
-        rating: 92.5333348092417,
-        name: "Hades",
-        summary: "A rogue-lite hack and slash dungeon crawler in which Zagreus, son of Hades the Greek god of the dead, attempts to escape his home and his oppressive father by fighting the souls of the dead through the various layers of the ever-shifting underworld, while getting to know and forging relationships with its inhabitants.",
-        url: "https://www.igdb.com/games/hades--1",
-        websites: [{
-          id: '95305',
-          url: "https://en.wikipedia.org/wiki/Hades_(video_game)",
-        }],
-      }
-    },
-  ]);
+function GamesProvider({ children }: GamesProviderProps) {
+  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
 
-  async function addNewGame(game: GameRequest) {
-    // Conectar com API
+  function getGameById(id: string) {
+    return games.find(game => game.id === id)
+  }
+
+  async function addNewGame({ gameIgdbId, gameStatus, gameStartedPlayingDate, gameFinishedPlayingDate, gameData }: Game) {
+    try {
+      console.log(gameStartedPlayingDate, gameFinishedPlayingDate)
+      const response = await api.post('/api/games', {
+        gameIgdbId,
+        gameStatus,
+        gameStartedPlayingDate,
+        gameFinishedPlayingDate,
+      })
+      const data = response.data as Game
+      const actualGames = [...games]
+      actualGames.push({
+        id: data.id,
+        gameIgdbId,
+        gameStatus,
+        gameStartedPlayingDate,
+        gameFinishedPlayingDate,
+        gameData
+      })
+      setGames(actualGames)
+    } catch(error) {
+        Alert.alert('Falha ao adicionar um novo jogo!')
+    }
+  }
+
+  async function fetchGameData(data: Game[], results: GameData[]) {
+    for (let item of data) {
+      const requestBody = `fields id, name, cover.image_id, first_release_date,
+      franchises.name,
+      platforms.id, platforms.category, platforms.platform_logo.image_id, platforms.name,
+      game_modes.*,genres.*,involved_companies.id, involved_companies.company.id, involved_companies.company.name,rating,rating_count,screenshots.image_id, summary,url,status,websites.*;
+      where id = ${item.gameIgdbId} ;`
+      await apiIGDB.post('games', requestBody).then(result => {
+        results.push(result.data[0])})
+    }
+  }
+
+  async function loadGamesFromGameCenter() {
+    try {
+      setLoading(true)
+      const response = await api.get('/api/games')
+      const data = response.data as Game[]
+      
+      let results: GameData[] = []
+        
+      await fetchGameData(data, results);
+
+      for (let result of results) {
+        const gameIndex = data.findIndex(item => item.gameIgdbId === String(result.id) && item.gameData === undefined)
+        data[gameIndex].gameStartedPlayingDate = new Date(data[gameIndex].gameStartedPlayingDate as unknown as string) 
+        data[gameIndex].gameFinishedPlayingDate = new Date(data[gameIndex].gameFinishedPlayingDate as unknown as string) 
+        data[gameIndex].gameData = result
+      }
+      setGames(data)
+      
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+
+  }
+
+  async function updateGame({ game, status, gameFinishedPlayingDate, gameStartedPlayingDate}: UpdateGameParams) {
+    try {
+      const response = await api.put(`/api/games/${game.id}`, {
+        gameStartedPlayingDate: gameStartedPlayingDate?.toISOString() ,
+        gameFinishedPlayingDate: gameFinishedPlayingDate?.toISOString(),
+        gameStatus: status
+      })
+
+      const data = response.data as Game
+
+      const existingGameIndex = games.findIndex(item => item.id === game.id)
+      const existingGame = games[existingGameIndex]
+      const actualGames = [...games];
+
+
+      existingGame.gameStatus = data.gameStatus;
+      existingGame.gameStartedPlayingDate = data.gameStartedPlayingDate;
+      existingGame.gameFinishedPlayingDate = data.gameFinishedPlayingDate;
+      actualGames.splice(existingGameIndex, 1)
+      actualGames.push(existingGame)
+      setGames(actualGames)
+    } catch ( error) {
+      Alert.alert("Ocorreu um erro ao atualizar este jogo")
+    }
+  }
+
+  async function deleteGame(game: Game) {
+    try {
+      await api.delete(`/api/games/${game.id}`)
+      const existingGame = games.findIndex(item => item.id === game.id)
+      const actualGames = [...games];
+      actualGames.splice(existingGame, 1)
+      setGames(actualGames)
+    } catch (error) {
+      Alert.alert("Ocorreu um erro ao excluir jogo")
+    }
   }
 
 
-  async function loadUserStorageData() {
-    // const storage = await AsyncStorage.getItem(COLLECTION_USERS);
+  async function loadGamesStorageData() {
+    const storage = await AsyncStorage.getItem(COLLECTION_GAMES);
 
-    // if (storage) {
-    //   const userLogged = JSON.parse(storage) as User;
-    //   api.defaults.headers.authorization = `Bearer ${userLogged.token}`
+    if (storage) {
+      const games = JSON.parse(storage) as Game[];
 
-    //   setUser(userLogged)
-    // }
+      setGames(games)
+    }
+  }
+  async function saveGamesStorageData() {
+    await AsyncStorage.setItem(COLLECTION_GAMES, JSON.stringify(games))
   }
 
-  // useEffect(() => {
-  //   loadUserStorageData()
-  // }, [])
+  useEffect(() => {
+    loadGamesStorageData()
+  }, [])
+
+  useEffect(() => {
+    saveGamesStorageData()
+  }, [games])
 
   return (
     <GamesContext.Provider value={{
       games,
       loading,
       addNewGame,
+      loadGamesFromGameCenter,
+      deleteGame,
+      updateGame,
+      getGameById
     }} >
       { children }
     </GamesContext.Provider>

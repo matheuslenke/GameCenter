@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import br.ufes.gamecenter.apirest.model.User;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity(name="Game")
 public class Game {
@@ -19,12 +20,10 @@ public class Game {
     private String gameIgdbId;
 
     @Field(name="game_started_playing_date")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate gameStartedPlayingDate;
+    private Date gameStartedPlayingDate;
 
     @Field(name="game_finished_playing_date")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate gameFinishedPlayingDate;
+    private Date gameFinishedPlayingDate;
 
     @Field(name="game_status")
     private GameStatus gameStatus;
@@ -59,19 +58,19 @@ public class Game {
         this.gameIgdbId = gameIgdbId;
     }
 
-    public LocalDate getGameStartedPlayingDate() {
+    public Date getGameStartedPlayingDate() {
         return gameStartedPlayingDate;
     }
 
-    public void setGameStartedPlayingDate(LocalDate gameStartedPlayingDate) {
+    public void setGameStartedPlayingDate(Date gameStartedPlayingDate) {
         this.gameStartedPlayingDate = gameStartedPlayingDate;
     }
 
-    public LocalDate getGameFinishedPlayingDate() {
+    public Date getGameFinishedPlayingDate() {
         return gameFinishedPlayingDate;
     }
 
-    public void setGameFinishedPlayingDate(LocalDate gameFinishedPlayingDate) {
+    public void setGameFinishedPlayingDate(Date gameFinishedPlayingDate) {
         this.gameFinishedPlayingDate = gameFinishedPlayingDate;
     }
 

@@ -4,12 +4,6 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import {theme} from '../../global/theme';
 
 export const styles = StyleSheet.create({
-  backButton: {
-    flex: 1,
-    alignItems: 'flex-start',
-    marginLeft: 20,
-    marginBottom: 10,
-  },
   container: {
     flex: 1,
     marginTop: getStatusBarHeight() + 20,
@@ -22,7 +16,8 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 50
   },
   title:{
     fontFamily: theme.fonts.title700,
@@ -43,4 +38,20 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
   },
+  button: {
+    marginHorizontal: 130,
+    marginVertical: 20,
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+    borderRadius: 8,
+    maxHeight: 36,
+    backgroundColor: theme.colors.primary50,
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontFamily: theme.fonts.title700,
+    color: theme.colors.heading,
+    textAlign: 'center',
+    fontSize: 16
+  }
 });

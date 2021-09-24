@@ -12,6 +12,7 @@ import { GenreTag } from '../../components/GenreTag';
 import { PlatformLogo } from '../PlatformLogo';
 
 import { formatDate } from '../../utils/dateFormatter'
+import { filterPlatforms } from '../../utils/platforms';
 
 type Props = {
   data: Game
@@ -23,7 +24,9 @@ export function GameProps( { data }: Props ) {
   if (gameData === undefined) {
     return (<View></View>)
   }
-  const releaseDate = formatDate(new Date(gameData.first_release_date * 1000));
+
+  const releaseDate = formatDate(new Date(Number(gameData.first_release_date) * 1000));
+  const filteredPlatforms = filterPlatforms(gameData?.platforms)
 
   return (
     <View style={styles.container}>
@@ -45,14 +48,14 @@ export function GameProps( { data }: Props ) {
         <Text style={styles.subtitle}>Plataformas: </Text>
         <FlatList
           horizontal
-          keyExtractor={ item => item.id}
-          data={gameData.platforms}
+          keyExtractor={ item => String(item)}
+          data={filteredPlatforms}
           style={styles.list}
           fadingEdgeLength={10} 
           showsHorizontalScrollIndicator={false}
           renderItem={( { item} ) => (
               <View style={styles.platformLogo}>
-                <PlatformLogo platform={item.id} />
+                <PlatformLogo platform={String(item)} />
               </View>
           )}
         />

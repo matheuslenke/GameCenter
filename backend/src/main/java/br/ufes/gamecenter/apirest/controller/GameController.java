@@ -25,8 +25,13 @@ public class GameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Game>> getAllGames() {
-        return ResponseEntity.ok(gameService.getAllGames());
+    public ResponseEntity<List<Game>> getAllGames( Authentication authentication) throws Exception {
+        Optional<User> user = userRepository.findByLogin(authentication.getPrincipal().toString());
+
+        if (user.isEmpty()) {
+            throw new Exception("Usuário não encontrado");
+        }
+        return ResponseEntity.ok(gameService.getAllGamesByUser(user.get()));
     }
 
     @PostMapping
@@ -39,5 +44,28 @@ public class GameController {
         game.setUserId(user.get());
         gameService.addGame(game);
         return new ResponseEntity<>(game, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{gameId}")
+    public ResponseEntity<Game> updateGame(@RequestBody Game game, Authentication authentication, @PathVariable String gameId) throws Exception {
+        Optional<User> user = userRepository.findByLogin(authentication.getPrincipal().toString());
+
+        if (user.isEmpty()) {
+            throw new Exception("Usuário não encontrado");
+        }
+
+        Game savedGame = gameService.updateGame(game, gameId);
+        return new ResponseEntity<>(savedGame, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{gameId}")
+    public ResponseEntity<Object> deleteExpense(Authentication authentication, @PathVariable String gameId) throws Exception {
+        Optional<User> user = userRepository.findByLogin(authentication.getPrincipal().toString());
+
+        if (user.isEmpty()) {
+            throw new Exception("Usuário não encontrado");
+        }
+        gameService.deleteGame(gameId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

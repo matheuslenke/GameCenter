@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   View,
   Text
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { Game } from '../../hooks/games';
+import { Game, useGames } from '../../hooks/games';
 import { formatDate } from '../../utils/dateFormatter';
+import { Load } from '../Load';
 
 import { styles } from './styles';
 
@@ -15,17 +16,18 @@ type Props = {
 }
 
 export function GamePlayingStatus({ data }: Props) {
-  const { gameData } = data;
+  const [loading, setLoading] = useState(false)
+  const showFirstButton = data.gameStatus === 'WISHLIST' || data.gameStatus === 'BACKLOG' || data.gameStatus === 'PLAYING' || data.gameStatus === 'ABANDONED'
+  const showSecondsButton = data.gameStatus === 'PLAYING'
 
-  const showFirstButton = data.status === 'WISHLIST' || data.status === 'BACKLOG' || data.status === 'PLAYING' || data.status === 'ABANDONED'
-  const showSecondsButton = data.status === 'PLAYING'
+  const { updateGame } = useGames()
 
   let statusText = 'Lista de Desejos'
   let buttonText = 'Marcar como \n finalizado'
   let startedText = 'Não iniciado'
   let finishedText = ''
 
-  switch (data.status) {
+  switch (data.gameStatus) {
     case 'WISHLIST':
       startedText = 'Não adquirido'
       buttonText = 'Adicionar ao Backlog'
@@ -37,27 +39,57 @@ export function GamePlayingStatus({ data }: Props) {
       break;
     case 'PLAYING':
       buttonText = 'Marcar como finalizado'
-      startedText = `Iniciado em ${formatDate(data.startedAt || new Date())}`
+      startedText = `Iniciado em ${formatDate(data.gameStartedPlayingDate || new Date())}`
       finishedText = 'Não finalizado'
       statusText = 'Jogando'
       break;
     case 'FINISHED':
-      startedText = `Iniciado em ${formatDate(data.startedAt || new Date())}`
-      finishedText = `Finalizado em ${formatDate(data.finishedAt || new Date())}`
+      startedText = `Iniciado em ${formatDate(data.gameStartedPlayingDate || new Date())}`
+      finishedText = `Finalizado em ${formatDate(data.gameFinishedPlayingDate || new Date())}`
       statusText = 'Finalizado'
       break;
     case 'ABANDONED':
-      startedText = `Iniciado em ${formatDate(data.startedAt || new Date())}`
-      finishedText = `Abandonado em ${formatDate(data.finishedAt || new Date())}`
+      startedText = `Iniciado em ${formatDate(data.gameStartedPlayingDate || new Date())}`
+      finishedText = `Abandonado em ${formatDate(data.gameFinishedPlayingDate || new Date())}`
       statusText = 'Abandonado'
       buttonText = 'Retomar jogatina'
       break;
   }
-
   const showCenterOrSpaceBetween = (showSecondsButton && showFirstButton ) ? true : false
+
+  function handleUpdate() {
+    setLoading(true)
+    switch (data.gameStatus) {
+      case 'WISHLIST':
+        updateGame({ game: data, status: 'BACKLOG'} )
+        break;
+      case 'BACKLOG':
+        updateGame({game: data, status: 'PLAYING', gameStartedPlayingDate: new Date()})
+        break;
+      case 'PLAYING':
+        updateGame({game: data, status: 'FINISHED', gameStartedPlayingDate: new Date()})
+        break;
+      case 'ABANDONED':
+        updateGame({game: data, status: 'PLAYING', gameStartedPlayingDate: new Date()})
+        break;
+    }
+    setLoading(false)
+  }
+  function handleAbandon() {
+    updateGame({game: data, status: 'ABANDONED', gameFinishedPlayingDate: new Date()})
+  }
+
+  if(loading) {
+    return (
+      <View style={styles.container}>
+        <Load />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
+
       <View style={styles.gameStatus}>
         <View style={styles.playStatus}>
           <Text style={styles.statusText}>Status: </Text>
@@ -71,18 +103,18 @@ export function GamePlayingStatus({ data }: Props) {
           showFirstButton &&
           <RectButton 
             style={styles.primaryButton}
-            onPress={() => {}}
+            onPress={handleUpdate}
           >
-            <Text style={styles.buttonText}>
-              {buttonText}
-            </Text>
+           <Text style={styles.buttonText}>
+                {buttonText}
+            </Text> 
           </RectButton>
         }
         {
           showSecondsButton &&
           <RectButton 
             style={styles.secondaryButton}
-            onPress={() => {}}
+            onPress={handleAbandon}
           >
             <Text style={styles.buttonText}>
               Abandonar jogo

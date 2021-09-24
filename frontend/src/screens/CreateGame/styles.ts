@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   form: {
     flex: 1,
-    marginHorizontal: 40,
+    marginHorizontal: 15,
     marginVertical: 24,
     justifyContent: 'space-between',
   },

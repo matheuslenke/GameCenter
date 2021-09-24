@@ -16,6 +16,7 @@ import { PlatformLogo } from '../PlatformLogo';
 import { GenreTag } from '../GenreTag';
 import { GameRating } from '../GameRating';
 import { PlaceholderCard } from './PlaceholderCard';
+import { filterPlatforms } from '../../utils/platforms';
 
 type Props = RectButtonProps & {
   data?: GameData;
@@ -32,7 +33,9 @@ export function GameCard({ data, game , ...rest}: Props) {
   } else if(game !== undefined) {
     gameData = game.gameData;
   }
-  
+
+  const filteredPlatforms = gameData?.platforms ? filterPlatforms(gameData?.platforms) : []
+
   return (
     <RectButton {...rest}>
       <View style={styles.container}>
@@ -67,14 +70,14 @@ export function GameCard({ data, game , ...rest}: Props) {
               <Text numberOfLines={2} style={styles.gameSummary}>{gameData?.summary}</Text>
               <FlatList
                 horizontal
-                keyExtractor={ item => String(item.id)}
-                data={gameData?.platforms}
+                keyExtractor={ item => String(item)}
+                data={filteredPlatforms}
                 style={styles.platforms}
                 fadingEdgeLength={10} 
                 showsHorizontalScrollIndicator={false}
                 renderItem={( { item} ) => (
                     <View style={styles.platformLogo}>
-                      <PlatformLogo platform={item.id} />
+                      <PlatformLogo platform={String(item)} />
                     </View>
                 )}
               >

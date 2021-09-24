@@ -3,41 +3,33 @@ import React, { useState } from 'react';
 import {
   Text,
   View,
-  Modal,
-  TouchableWithoutFeedback,
   Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
 } from 'react-native';
 import { Button } from '../../components/Forms/Button';
 import { GameSelect } from '../../components/Forms/GameSelect';
 import { GameStatusSelect } from '../../components/Forms/GameStatusSelect';
 import { GameCard } from '../../components/GameCard';
-import { PlaceholderCard } from '../../components/GameCard/PlaceholderCard';
 import { ModalView } from '../../components/ModalView';
-import { Game, GameData, GameRequest, useGames } from '../../hooks/games';
+import { enumGameStatusCategory, Game, GameData, useGames } from '../../hooks/games';
 import { GameSelectModal } from '../GameSelectModal';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { styles } from './styles';
 import { categoriesSelect, GameCategoryType } from '../../utils/categories'
 import { DatePickerInput } from '../../components/Forms/DatePickerInput';
-import { Background } from '../../components/Background';
+import { useNavigation } from '@react-navigation/core';
 
 export type InputDate = {
   day: string;
   month: string;
   year: string;
 }
-export type enumCategory = 'WISHLIST' | 'BACKLOG' | 'PLAYING' | 'FINISHED' | 'ABANDONED';
 
 export function CreateGame(){
   const [gameName, setGameName] = useState("")
   const [game, setGame] = useState<GameData | undefined>(undefined)
   const [gameSelectModalOpen, setGameSelectModalOpen] = useState(false)
-  const [gameCategory, setGameCategory] = useState<enumCategory>('WISHLIST')
+  const [gameCategory, setGameCategory] = useState<enumGameStatusCategory>('WISHLIST')
 
   const [startDate, setStartDate] = useState<InputDate>({day: '', month: '', year: ''})
   const [endDate, setEndDate] = useState<InputDate>({day: '', month: '', year: ''})
@@ -56,31 +48,51 @@ export function CreateGame(){
     setGameSelectModalOpen(false)
   }
 
-  async function handleAddNewGame(gameData: GameData) {
-    const sendingObject = {} as GameRequest
+  async function handleAddNewGame() {
+    const sendingObject = {} as Game
     let newStartDate = undefined;
     let newEndDate = undefined;
 
     if (gameCategory === 'PLAYING' ) {
       if (startDate.day !== '' && startDate.month !== '' && startDate.year !== '') {
-        newStartDate = new Date(`${startDate.month}-${startDate.day}-${startDate.year}`)
-        sendingObject.startedAt = newStartDate
+        newStartDate = new Date(`${startDate.year}-${startDate.month}-${startDate.day}`)
+        if(!newStartDate) {
+          Alert.alert("Erro com a data")
+        }
+        sendingObject.gameStartedPlayingDate = newStartDate
       }
     } else if (gameCategory === 'FINISHED' || gameCategory === 'ABANDONED' ) {
       if (startDate.day !== '' && startDate.month !== '' && startDate.year !== '') {
-        newStartDate = new Date(`${startDate.month}-${startDate.day}-${startDate.year}`)
-        sendingObject.startedAt = newStartDate
+        newStartDate = new Date(`${startDate.year}-${startDate.month}-${startDate.day}`)
+        sendingObject.gameStartedPlayingDate = newStartDate
+        if(!newStartDate) {
+          Alert.alert("Erro com a data")
+        }
       }
       if (endDate.day !== '' && endDate.month !== '' && endDate.year !== '') {
-        newEndDate = new Date(`${endDate.month}-${endDate.day}-${endDate.year}`)
-        sendingObject.finishedAt = newEndDate
+        newEndDate = new Date(`${endDate.year}-${endDate.month}-${endDate.day}`)
+        sendingObject.gameFinishedPlayingDate = newEndDate
+        if(!newEndDate) {
+          Alert.alert("Erro com a data")
+        }
       }
     }
+    if(game === undefined || game.id === undefined) {
+      Alert.alert("Erro", "Erro ao adicionar jogo")
+      return
+    }
 
-    sendingObject.igdb_id = gameData.id;
-    sendingObject.status = gameCategory 
+    sendingObject.gameIgdbId = game.id;
+    sendingObject.gameData = game
+    sendingObject.gameStatus = gameCategory
 
     addNewGame(sendingObject);
+    Alert.alert("Sucesso!", "Jogo adicionado com sucesso!")
+    setGame(undefined);
+    setStartDate({day: '', month: '', year: ''})
+    setEndDate({day: '', month: '', year: ''})
+    setGameCategory('WISHLIST')
+    setGameName('')
   }
   
   return (
@@ -151,7 +163,7 @@ export function CreateGame(){
               </View>
 
               <View style={{justifyContent: 'center', paddingHorizontal: 50}}>
-                  <Button title="Adicionar jogo" />
+                  <Button title="Adicionar jogo" onPress={handleAddNewGame} />
               </View>
             </View>
             <ModalView

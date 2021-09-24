@@ -4,7 +4,8 @@ import React from 'react';
 import {
   View,
 } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { theme } from '../../global/theme';
 
@@ -19,12 +20,12 @@ export function BackButton() {
   }
 
   return (
-    <RectButton style={styles.container} onPress={handlePressBackButton}>
+    <TouchableOpacity style={styles.container} onPress={handlePressBackButton}>
       <MaterialIcons 
         name="arrow-back-ios"
         size={25}
         color={theme.colors.highlight}
       />
-    </RectButton>
+    </TouchableOpacity>
   );
 }

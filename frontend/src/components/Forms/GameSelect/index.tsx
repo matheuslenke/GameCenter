@@ -31,6 +31,7 @@ export function GameSelect( { placeholder, gameName, setGameName, onPressSearch 
         placeholderTextColor={theme.colors.heading}
         value={gameName}
         onChangeText={setGameName}
+        onSubmitEditing={onPressSearch}
       >
       </TextInput>
       <TouchableOpacity style={styles.icon} onPress={onPressSearch} >

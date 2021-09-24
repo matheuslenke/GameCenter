@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
   View,
-  Image
+  Image,
+  Text
 } from 'react-native';
 
 import { styles } from './styles';
@@ -13,44 +14,52 @@ import PlayStationLogo from '../../assets/img/platforms/playstation.svg';
 import SwitchLogo from '../../assets/img/platforms/nintendoswitch.svg';
 import MacLogo from '../../assets/img/platforms/apple.svg';
 import Nintendo from '../../assets/img/platforms/nintendo.svg';
-import { platforms } from '../../utils/platforms';
+import Sega from '../../assets/img/platforms/sega.svg';
+import Android from '../../assets/img/platforms/android.svg';
+import { reducedPlatforms } from '../../utils/platforms';
 
 type Props = {
-  platform: number;
+  platform: string;
 }
 
 export function PlatformLogo({ platform }: Props){
 
-  switch(platform) {
-    case platforms.PC:
+  switch(Number(platform)) {
+    case reducedPlatforms.PC:
       return (
         <WindowsLogo width={25} height={25} />
       )
-    case platforms.MAC || platforms.IOS:
-    return (
-      <MacLogo width={25} height={25} />
-    )
-    case platforms.XBOXONE || platforms.XBOXSERIESSX || platforms.XBOX360:
+    case reducedPlatforms.MAC:
       return (
-          <XBOXLogo width={25} height={25} />
+        <MacLogo width={25} height={25} />
       )
-    case platforms.PS || platforms.PS2 || platforms.PS3 || platforms.PS4 || platforms.PS5 || platforms.PSVR || platforms.PSP:
+    case reducedPlatforms.SEGA:
+      return (
+        <Sega width={50} height={25} />
+      )
+    case reducedPlatforms.XBOX:
+      return (
+        <XBOXLogo width={25} height={25} />
+      )
+    case reducedPlatforms.PLAYSTATION:
       return (
         <PlayStationLogo width={30} height={30} />
       )
-    case platforms.NINTENDOSWITCH:
-    return (
-      <SwitchLogo width={25} height={25} />
-    )
-    /*case platforms.NINTENDO3DS || platforms.NINTENDODSI || platforms.NINTENDO64 || platforms.NINTENDODS:
-    return(
-      <View style={{flex: 1}}>
-        <Nintendo width={60} height={40}/>
-      </View>
-    )*/
+    case reducedPlatforms.NINTENDOSWITCH:
+      return (
+        <SwitchLogo width={25} height={25} />
+      )
+    case reducedPlatforms.NINTENDO:
+      return(
+        <Nintendo width={70} height={25} />
+      )
+    case reducedPlatforms.ANDROID:
+      return(
+        <Android width={25} height={25} />
+      )
     default:
       return (
-        <View />
+        <View/>
       )
   }
 }

@@ -37,7 +37,7 @@ export function GameSelectModal({ gameName, setGame, closeSelectGame }: Props) {
     platforms.id, platforms.category, platforms.platform_logo.image_id, platforms.name,
     game_modes.*,genres.*,involved_companies.id, involved_companies.company.id,
     involved_companies.company.name,rating,rating_count,screenshots.image_id,
-    summary,url,status,websites.*; limit 10;`
+    summary,url,status,websites.*; limit 30;`
 
     try {
       const response = await apiIGDB.post('games', searchText) ;
