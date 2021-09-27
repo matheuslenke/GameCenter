@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiIGDB = axios.create({
-    baseURL: 'https://api.igdb.com/v4',
+    baseURL: process.env.IGDB_API_URL,
     headers: {
         'Client-Id': '70u2ib0ndnbmao4z6njvu85vaki5t1',
         'Authorization': 'Bearer 3d11fj389tdiudml5iko54bdw7y9ga',
@@ -9,6 +9,6 @@ const apiIGDB = axios.create({
     }
 })
 
-const imageCoverUrl =  'https://images.igdb.com/igdb/image/upload/t_cover_big/'
+const imageCoverUrl =  process.env.IGDB_API_COVER_URL
 
 export { apiIGDB, imageCoverUrl }

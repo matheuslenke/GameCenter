@@ -24,7 +24,7 @@ export function Home(){
   const [category, setCategory] = useState<enumGameStatusCategory>('PLAYING');
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [refreshing, setRefreshing] = useState(false);
-  const { games, loading, loadGamesFromGameCenter } = useGames();
+  const { games, loading, loadGamesFromGameCenter, removeGamesStorageData } = useGames();
   const { user, signOut } = useAuth();
 
   const navigation = useNavigation();
@@ -33,9 +33,13 @@ export function Home(){
     navigation.navigate('GameDetails', { gameSelected  });
   }
 
+  function handleSignOut() {
+    signOut();
+    removeGamesStorageData();
+  }
+
   useEffect( () => {
     const filtered = games.filter(game => {
-      // console.log(game.gameData?.name)
       return game.gameStatus === category
     })
     setFilteredGames(filtered)
@@ -45,7 +49,7 @@ export function Home(){
   return (
     <Background>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => { signOut() }}>
+        <TouchableOpacity onPress={handleSignOut}>
           <Profile user_name={user.display_name} user_avatar={user.avatar} />
 
         </TouchableOpacity>

@@ -17,8 +17,8 @@ export function Profile( { user_name, user_avatar }: Props ){
   return (
     <View style={styles.container}>
       
-      <Avatar urlImage={user_avatar} />
-      <View>
+      <Avatar urlImage={user_avatar} sizeImage={62}/>
+      <View style={[{marginLeft: 20}]}>
         <View style={styles.user}>
           <Text style={styles.greeting}>
             Olá,

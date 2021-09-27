@@ -20,7 +20,6 @@ const { RESPONSE_TYPE } = process.env;
 import { useEffect } from 'react';
 import { api } from '../services/api';
 import { apiIGDB } from '../services/apiIGDB';
-import axios, { AxiosResponse } from 'axios';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLLECTION_GAMES } from '../config/database';
@@ -82,11 +81,12 @@ export type Game = {
 type GamesContextData = {
   games: Game[];
   loading: boolean;
-  addNewGame: (game: Game) => void;
+  addNewGame: (game: Game) => Promise<boolean>;
   loadGamesFromGameCenter: () => void;
   deleteGame: (game: Game) => void;
   updateGame: (data: UpdateGameParams) => void;
   getGameById: (id: string) => Game | undefined;
+  removeGamesStorageData: () => void;
 }
 
 type GamesProviderProps = {
@@ -112,7 +112,6 @@ function GamesProvider({ children }: GamesProviderProps) {
 
   async function addNewGame({ gameIgdbId, gameStatus, gameStartedPlayingDate, gameFinishedPlayingDate, gameData }: Game) {
     try {
-      console.log(gameStartedPlayingDate, gameFinishedPlayingDate)
       const response = await api.post('/api/games', {
         gameIgdbId,
         gameStatus,
@@ -130,8 +129,11 @@ function GamesProvider({ children }: GamesProviderProps) {
         gameData
       })
       setGames(actualGames)
+      Alert.alert("Sucesso!", "Jogo adicionado com sucesso!")
+      return true;
     } catch(error) {
-        Alert.alert('Falha ao adicionar um novo jogo!')
+      Alert.alert('Falha ao adicionar um novo jogo!')
+      return true;
     }
   }
 
@@ -167,6 +169,7 @@ function GamesProvider({ children }: GamesProviderProps) {
       
     } catch (error) {
       console.log(error)
+      Alert.alert("Erro", "Ocorreu um erro ao carregar os dados dos jogos")
     } finally {
       setLoading(false)
     }
@@ -194,8 +197,9 @@ function GamesProvider({ children }: GamesProviderProps) {
       actualGames.splice(existingGameIndex, 1)
       actualGames.push(existingGame)
       setGames(actualGames)
+      Alert.alert("Sucesso!", `O jogo "${existingGame.gameData?.name}" foi atualizado com sucesso!`)
     } catch ( error) {
-      Alert.alert("Ocorreu um erro ao atualizar este jogo")
+      Alert.alert("Erro", "Ocorreu um erro ao atualizar este jogo")
     }
   }
 
@@ -206,8 +210,9 @@ function GamesProvider({ children }: GamesProviderProps) {
       const actualGames = [...games];
       actualGames.splice(existingGame, 1)
       setGames(actualGames)
+      Alert.alert("Sucesso!", `O jogo "${game.gameData?.name}" foi deletado com sucesso!`)
     } catch (error) {
-      Alert.alert("Ocorreu um erro ao excluir jogo")
+      Alert.alert("Erro", "Ocorreu um erro ao excluir jogo")
     }
   }
 
@@ -221,8 +226,13 @@ function GamesProvider({ children }: GamesProviderProps) {
       setGames(games)
     }
   }
+
   async function saveGamesStorageData() {
     await AsyncStorage.setItem(COLLECTION_GAMES, JSON.stringify(games))
+  }
+
+  async function removeGamesStorageData() {
+    await AsyncStorage.removeItem(COLLECTION_GAMES);
   }
 
   useEffect(() => {
@@ -241,7 +251,8 @@ function GamesProvider({ children }: GamesProviderProps) {
       loadGamesFromGameCenter,
       deleteGame,
       updateGame,
-      getGameById
+      getGameById,
+      removeGamesStorageData
     }} >
       { children }
     </GamesContext.Provider>

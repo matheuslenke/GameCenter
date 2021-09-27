@@ -17,7 +17,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { styles } from './styles';
 import { categoriesSelect, GameCategoryType } from '../../utils/categories'
 import { DatePickerInput } from '../../components/Forms/DatePickerInput';
-import { useNavigation } from '@react-navigation/core';
 
 export type InputDate = {
   day: string;
@@ -86,13 +85,15 @@ export function CreateGame(){
     sendingObject.gameData = game
     sendingObject.gameStatus = gameCategory
 
-    addNewGame(sendingObject);
-    Alert.alert("Sucesso!", "Jogo adicionado com sucesso!")
-    setGame(undefined);
-    setStartDate({day: '', month: '', year: ''})
-    setEndDate({day: '', month: '', year: ''})
-    setGameCategory('WISHLIST')
-    setGameName('')
+    const addSuccess = await addNewGame(sendingObject);
+
+    if(addSuccess === true) {
+      setGame(undefined);
+      setStartDate({day: '', month: '', year: ''})
+      setEndDate({day: '', month: '', year: ''})
+      setGameCategory('WISHLIST')
+      setGameName('')
+    }
   }
   
   return (
@@ -101,7 +102,7 @@ export function CreateGame(){
           style={styles.scrollView}
           extraScrollHeight={120}
           viewIsInsideTabBar={true}
-          contentContainerStyle={{flex: 1}}
+          contentContainerStyle={{ flex: 1 }}
         >
             <Text style={styles.title}>Adicionar jogo</Text>
             <View style={styles.form}>

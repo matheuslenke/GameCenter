@@ -17,11 +17,12 @@ const { REDIRECT_URI } = process.env;
 const { RESPONSE_TYPE } = process.env;
 
 // import { api } from '../services/api';
-import { COLLECTION_USERS } from '../config/database';
+import { COLLECTION_GAMES, COLLECTION_USERS } from '../config/database';
 import { twitchApi, twitchClientId } from '../services/twitchApi'
 import { makeUrl } from 'expo-linking';
 import { Alert } from 'react-native';
 import { api } from '../services/api';
+import { useGames } from './games';
 
 type User = {
   id: string;
@@ -96,6 +97,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(false);
 
+  const { loadGamesFromGameCenter } = useGames()
+
   async function getTwitchUserInformation(twitchToken: string) {
     try {
       const response = await twitchApi.get('helix/users');
@@ -126,9 +129,10 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       if (login.status === 200) {
         api.defaults.headers.authorization = `Bearer ${login.data}`
-
+        console.log("Login user")
       } else {
         // User needs to register
+        console.log("Register user")
         await api.post('/user', {
           login: userData.email,
           password: userData.display_name
@@ -170,6 +174,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         const userData = await getTwitchUserInformation(params.access_token) as User
 
         signInLocalAPI(userData)
+        // loadGamesFromGameCenter()
       }
     } catch ( error ) {
       throw new Error('Erro ao fazer a autenticação.');
@@ -181,6 +186,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signOut() {
     await AsyncStorage.removeItem(COLLECTION_USERS)
+    await AsyncStorage.removeItem(COLLECTION_GAMES)
     setUser({} as User)
   }
 
@@ -191,6 +197,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       const userLogged = JSON.parse(storage) as User;
       twitchApi.defaults.headers.authorization = `Bearer ${userLogged.token}`
       api.defaults.headers.authorization = `Bearer ${userLogged.localApi?.token}`
+      console.log(userLogged)
       setUser(userLogged)
     }
   }
