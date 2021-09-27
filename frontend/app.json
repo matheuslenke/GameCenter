@@ -3,9 +3,18 @@
     "name": "gamecenter",
     "slug": "gamecenter",
     "version": "1.0.0",
+    "scheme": "gamecenter",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "dev.lenkeigor.gamecenter",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "dev.lenkeigor.gamecenter",
+      "versionCode": 1
+    }
   },
   "name": "gamecenter"
 }

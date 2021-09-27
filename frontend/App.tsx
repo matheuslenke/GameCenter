@@ -8,6 +8,8 @@ import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold } from '@exp
 
 import { Background } from './src/components/Background';
 import { Routes } from './src/routes';
+import { GamesProvider } from './src/hooks/games';
+import { AuthProvider } from './src/hooks/auth';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +33,11 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Routes />
+      <AuthProvider>
+        <GamesProvider>
+          <Routes />
+        </GamesProvider>
+      </AuthProvider>
     </Background>
   );
 }

@@ -8,19 +8,24 @@ import { Avatar } from '../Avatar';
 
 import { styles } from './styles';
 
-export function Profile(){
+type Props = {
+  user_name: string;
+  user_avatar: string;
+}
+
+export function Profile( { user_name, user_avatar }: Props ){
   return (
     <View style={styles.container}>
       
-      <Avatar urlImage="https://github.com/matheuslenke.png" />
-      <View>
+      <Avatar urlImage={user_avatar} sizeImage={62}/>
+      <View style={[{marginLeft: 20}]}>
         <View style={styles.user}>
           <Text style={styles.greeting}>
             Olá,
           </Text>
 
           <Text style={styles.username}>
-            Matheus
+            { user_name }
           </Text>
         </View>
         <Text style={styles.message}>

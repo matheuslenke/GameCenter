@@ -35,10 +35,20 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: theme.colors.secondary70
   },
+  titleTwitch:{
+    flex: 1,
+    fontFamily: theme.fonts.subtitle400,
+    fontSize: 16,
+    textAlign: 'center',
+    color: theme.colors.heading
+  },
   buttonDiscord: {
     backgroundColor: theme.colors.discord,
   },
   buttonOther: {
     backgroundColor: theme.colors.highlight
-  }
+  },
+  buttonTwitch: {
+    backgroundColor: theme.colors.twitch,
+  },
 });

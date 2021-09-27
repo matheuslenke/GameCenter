@@ -3,6 +3,7 @@ import React from 'react';
 import {
   View, ScrollView
 } from 'react-native';
+import { enumGameStatusCategory } from '../../hooks/games';
 
 import { categories } from '../../utils/categories';
 import { Category } from '../Category';
@@ -10,7 +11,7 @@ import { styles } from './styles';
 
 type Props = {
     categorySelected: string;
-    setCategory: (categoryId: string) => void;
+    setCategory: (categoryId: enumGameStatusCategory) => void;
 }
 
 export function CategorySelect({categorySelected, setCategory}: Props){
@@ -23,11 +24,11 @@ export function CategorySelect({categorySelected, setCategory}: Props){
     >
          {
            categories.map(category => (
-            <View style={{paddingRight: 10}}>
+            <View style={{paddingRight: 10}} key={category.id} >
               <Category 
                 title={category.title} icon={category.icon}
-                checked={category.id === categorySelected}
-                onPress={() => { setCategory(category.id)}}
+                checked={category.value === categorySelected}
+                onPress={() => { setCategory(category.value as enumGameStatusCategory)}}
               />
             </View>
           ))
