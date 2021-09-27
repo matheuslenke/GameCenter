@@ -1,6 +1,5 @@
 package br.ufes.gamecenter.apirest.repository;
 
-import br.ufes.gamecenter.apirest.model.Expense;
 import br.ufes.gamecenter.apirest.model.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

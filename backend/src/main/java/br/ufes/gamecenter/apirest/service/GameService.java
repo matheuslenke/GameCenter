@@ -1,6 +1,5 @@
 package br.ufes.gamecenter.apirest.service;
 
-import br.ufes.gamecenter.apirest.model.Expense;
 import br.ufes.gamecenter.apirest.model.Game;
 import br.ufes.gamecenter.apirest.model.User;
 import br.ufes.gamecenter.apirest.repository.GameRepository;
