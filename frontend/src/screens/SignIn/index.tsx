@@ -10,10 +10,7 @@ import { theme } from '../../global/theme';
 import { ButtonIcon } from '../../components/ButtonIcon';
 import { Background } from '../../components/Background';
 
-// import DiscordImg from '../../assets/discord.svg';
 import TwitchImg from '../../assets/img/social/twitchWhite.svg';
-// import AppleImg from '../../assets/appleLogo.svg';
-// import GoogleImg from '../../assets/googleLogo.svg';
 import { useAuth } from '../../hooks/auth';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -27,7 +24,7 @@ export function SignIn(){
     try {
       await signIn();
     } catch (error) {
-      Alert.alert(error);
+      Alert.alert(String(error));
     }
   }
 
