@@ -22,9 +22,9 @@
     <a href="https://github.com/othneildrew/Best-README-Template">Portugues</a>
   </p>
   <div>
-    <img src="docs/images/Home1.png" alt="Home of the app showing all games the user is playing" height="700">
-    <img src="docs/images/GameDetails1.png" alt="Game Details Screenshot showing Pokemon Unite" height="700">
-    <img src="docs/images/CreateGame.png" alt="Create Game Screen" height="700">
+    <img src="docs/images/Home1.png" alt="Home of the app showing all games the user is playing" width="33%">
+    <img src="docs/images/GameDetails1.png" alt="Game Details Screenshot showing Pokemon Unite" width="33%">
+    <img src="docs/images/CreateGame.png" alt="Create Game Screen" width="33%">
   </div>
 </div>
 
