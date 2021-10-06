@@ -21,6 +21,11 @@
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">Portugues</a>
   </p>
+  <div>
+    <img src="docs/images/Home1.png" alt="Home of the app showing all games the user is playing" height="700">
+    <img src="docs/images/GameDetails1.png" alt="Game Details Screenshot showing Pokemon Unite" height="700">
+    <img src="docs/images/CreateGame.png" alt="Create Game Screen" height="700">
+  </div>
 </div>
 
 
@@ -135,9 +140,20 @@ git clone https://github.com/matheuslenke/GameCenter.git
 ## 📲 Usage
 <!-- TODO -->
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Here you can see some Gifs of how someone would use this app. Some of the features are:
+* Log in with a Twitch.tv account, and it will link every game they add to their library
+* See all their games by status, learn more about the game in game details
+* Add new games to their library
+* Change the status of the games in their library
+* See what info we got from their Twitch.tv account, and log out
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<div align="center">
+  <img src="docs/images/Video1.gif" alt="Gif showing how to use the app" height="700">
+  <img src="docs/images/Video2.gif" alt="Gif showing how to use the app" height="700">
+  <img src="docs/images/Video3.gif" alt="Gif showing how to use the app" height="700">
+  <img src="docs/images/Video4.gif" alt="Gif showing how to use the app" height="700">
+</div>
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
