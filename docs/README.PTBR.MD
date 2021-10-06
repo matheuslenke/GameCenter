@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="docs/images/GameCenter.png" alt="Logo"  height="50">
+    <img src="images/GameCenter.png" alt="Logo"  height="50">
   </a>
 
   <h3 align="center">Seus jogos no controle</h3>
@@ -19,15 +19,19 @@
   <p align="center">
     If you prefer, please access documentation in English
     <br />
-    <a href="/docs/README.EN.MD">Click here</a>
+    <a href="/README.EN.MD">Click here</a>
   </p>
+    <div>
+    <img src="images/Home1.png" alt="Home of the app showing all games the user is playing" height="700">
+    <img src="images/GameDetails1.png" alt="Game Details Screenshot showing Pokemon Unite" height="700">
+    <img src="images/CreateGame.png" alt="Create Game Screen" height="700">
+  </div>
 </div>
 
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Sumário</summary>
+  <h1><summary>Sumário</summary></h1>
   <ol>
     <li><a href="#sobre-o-projeto">Sobre o Projeto</a></li>
     <li><a href="#feito-com">Feito com</a></li>
@@ -41,14 +45,11 @@
     <li><a href="#contato">Contato</a></li>
     <li><a href="#ferramentas-adicionais">Ferramentas adicionais</a></li>
   </ol>
-</details>
 
 
 
 <!-- SOBRE O PROJETO -->
 ## 📝 Sobre o projeto
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 GameCenter é um App mobile (androind & iOS) e uma API que permite o gerenciamento de todos os seus jogos e todos os dados referentes a eles, para todas as plataformas. Você tem acesso aos jogos que está jogando, irá jogar e quais estão finalizados. O objetivo da aplicação é fornecer aos usuários uma forma simples de gerenciar todos os seus jogos em seu disposito móvel.
 
@@ -133,11 +134,21 @@ git clone https://github.com/matheuslenke/GameCenter.git
 
 <!-- USAGE EXAMPLES -->
 ## 📲 Exemplos de uso
-<!-- TODO -->
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Aqui você consegue visualizar alguns gifs de como alguém utilizaria o aplicativo. Algumas das funcionalidades que o usuário possui:
+* Logar-se com uma conta da Twitch.tv, e cada jogo que for adicionado será linkado automaticamente com essa conta 
+* Visualizar todos os seus jogos por status, e aprender mais sobre os jogos nos detalhes do mesmo
+* Adicionar novos jogos à sua biblioteca
+* Modificar o status dos jogos já presentes na sua biblioteca
+* Visualizar as informações coletadas da api da Twitch.tv e deslogar-se
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<div align="center">
+  <img src="images/Video1.gif" alt="Gif showing how to use the app" height="700">
+  <img src="images/Video2.gif" alt="Gif showing how to use the app" height="700">
+  <img src="images/Video3.gif" alt="Gif showing how to use the app" height="700">
+  <img src="images/Video4.gif" alt="Gif showing how to use the app" height="700">
+</div>
+
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 

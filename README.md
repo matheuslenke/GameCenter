@@ -28,11 +28,16 @@
   </div>
 </div>
 
+<div height="200">
+</div>
 
+&nbsp;
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
+
+
+<div>
+  <h1><summary>Table of Contents</summary></h1>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
@@ -46,14 +51,13 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="#additional-tools">Additional Tools</a></li>
   </ol>
-</details>
+</div>
+
 
 
 
 <!-- ABOUT THE PROJECT -->
 ## 📝 About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 GameCenter is a mobile App (android & iOS) and an API to you manage all your games info in all yours platforms, so you can track the games you're playing, willing to play and finished. The goal of the application was to give users an easy way to manage all the games they have in their own mobile device.
 It was developed for the Integrated Project Classes, which is a course computer science students take at UFES - Universidade Federal do Espírito Santo, in Brazil.
