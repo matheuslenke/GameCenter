@@ -32,20 +32,20 @@
   <ol>
     <li><a href="#sobre-o-projeto">Sobre o Projeto</a></li>
     <li><a href="#feito-com">Feito com</a></li>
-    <li><a href="#começando">Começando</a></li>
-    <li><a href="#pré-requisitos">Pré-Requisitos</a></li>
-    <li><a href="#instalação">Instalação</a></li>
+    <li><a href="#comecando">Começando</a></li>
+    <li><a href="#pre-requisitos">Pré-Requisitos</a></li>
+    <li><a href="#instalacao">Instalação</a></li>
     <li><a href="#exemplos-de-uso">Exemplos de uso</a></li>
     <li><a href="#estrutura-de-arquivos">Estrutura de Arquivos</a></li>
     <li><a href="#contribuindo">Contribuindo</a></li>
-    <li><a href="#licença">Licença</a></li>
+    <li><a href="#licenca">Licença</a></li>
     <li><a href="#contato">Contato</a></li>
     <li><a href="#ferramentas-adicionais">Ferramentas adicionais</a></li>
   </ol>
 
 
+<div id="sobre-o-projeto"> </div>
 
-<!-- SOBRE O PROJETO -->
 ## 📝 Sobre o projeto
 
 GameCenter é um App mobile (androind & iOS) e uma API que permite o gerenciamento de todos os seus jogos e todos os dados referentes a eles, para todas as plataformas. Você tem acesso aos jogos que está jogando, irá jogar e quais estão finalizados. O objetivo da aplicação é fornecer aos usuários uma forma simples de gerenciar todos os seus jogos em seu disposito móvel.
@@ -60,7 +60,7 @@ Algumas coisas que você pode fazer:
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 
-
+<div id="feito-com"> </div>
 
 ### 🔨 Feito com
 
@@ -78,11 +78,14 @@ Aqui estão algumas linguagens, frameworks, ferramentas e bibliotecas que usamos
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 
 
+<div id="comecando"> </div>
 
 <!-- GETTING STARTED -->
 ## ⌨️ Começando
 
 Aqui estão algumas instruções sobre como configurar o projeto localmente. Para obter uma cópia local, siga os passos abaixo:
+
+<div id="pre-requisitos"> </div>
 
 ### Pré-requisitos
 
@@ -98,6 +101,8 @@ Nesse projeto usamos yarn, mas você pode utilizar npm caso prefira
 
 
 Se você pretende rodar esse projeto localmente, você precisa pesquisar como instalar todos essas ferramentas para o seu sistema operacional, e pode encontrar todas essas informações nos seus devidos sites oficiais. Além disso, se você quer testar a aplicação mobile, precisa configurar um simulador Android ou um simulador iOS, caso utilize MacOS. Você pode utilizar o Expo web para rodar uma versão web do app, mas não funciona com as bibliotecas que utilizamos.
+
+<div id="instalacao"> </div>
 
 ## 💻 Instalação
 
@@ -128,6 +133,7 @@ git clone https://github.com/matheuslenke/GameCenter.git
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 
+<div id="exemplos-de-uso"> </div>
 
 <!-- USAGE EXAMPLES -->
 ## 📲 Exemplos de uso
@@ -148,6 +154,8 @@ Aqui você consegue visualizar alguns gifs de como alguém utilizaria o aplicati
 
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
+
+<div id="estrutura-de-arquivos"> </div>
 
 ## 📁 Estrutura de arquivos
 
@@ -191,7 +199,7 @@ Raiz do projeto
 
 ```
 
-
+<div id="contribuindo"> </div>
 
 <!-- CONTRIBUTING -->
 ## 🤝 Contribuindo
@@ -206,6 +214,7 @@ Se você tem alguma sugestão que fará este app ficar melhor, por favor realize
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 
+<div id="licenca"> </div>
 
 <!-- LICENSE -->
 ## 🔐 Licença
@@ -213,6 +222,8 @@ Se você tem alguma sugestão que fará este app ficar melhor, por favor realize
 Distribuído na Licença MIT. Veja `License.txt` para mais informações
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
+
+<div id="contato"> </div>
 
 <!-- CONTACT -->
 ## ✉️ Contato
@@ -225,7 +236,7 @@ Link do projeto: [https://github.com/matheuslenke/GameCenter](https://github.com
 
 <p align="right">(<a href="#top">Voltar ao topo</a>)</p>
 
-
+<div id="ferramentas-adicionais"> </div>
 
 <!-- ACKNOWLEDGMENTS -->
 ## 🔧 Ferramentas adicionais

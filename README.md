@@ -43,9 +43,9 @@
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
-    <li><a href="#installation">Installation</a></li>
+    <li><a href="#installation">Installing</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#usage">File Structure</a></li>
+    <li><a href="#file-structure">File Structure</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -54,9 +54,9 @@
 </div>
 
 
-
-
 <!-- ABOUT THE PROJECT -->
+<div id="about-the-project"> </div>
+
 ## 📝 About The Project
 
 GameCenter is a mobile App (android & iOS) and an API to you manage all your games info in all yours platforms, so you can track the games you're playing, willing to play and finished. The goal of the application was to give users an easy way to manage all the games they have in their own mobile device.
@@ -71,6 +71,7 @@ Some of the things you can do:
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+<div id="built-with"> </div>
 
 ### 🔨 Built With
 
@@ -88,11 +89,15 @@ Here are some of the languages, frameworks, tools and libraries used in developm
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+<div id="getting-started"> </div>
 
 <!-- GETTING STARTED -->
 ## ⌨️ Getting Started
 
 This is the instructions on setting up your project locally. To get a local copy up and running follow these simple example steps:
+
+
+<div id="prerequisites"> </div>
 
 ### Prerequisites
 
@@ -109,6 +114,8 @@ In this project we used yarn, but you can run it with npm if you prefer
 
 If you are planning to run this project locally, you need to seach how to install all these tools for your Operational System, and you can find that in their official websites. Also, if you want to test the mobile application, you need to configure an Android Simulator or an iOS Simulator if you're using MacOS. You can use Expo web to run an web version of the app, but it's not working with the libraries we used
 
+<div id="installation"> </div>
+
 ## 💻 Installation
 
 Clone the repo
@@ -116,7 +123,7 @@ Clone the repo
 git clone https://github.com/matheuslenke/GameCenter.git
 ```
 
-### ⚙️ Initializing Back-end
+### ⚙️Initializing Back-end
 ```bash
   # Enter back-end directory:
   $ cd backend
@@ -126,7 +133,7 @@ git clone https://github.com/matheuslenke/GameCenter.git
   $ mvn spring-boot:run
 ```
 
-### 📱 Initializing Front-end
+### 📱Initializing Front-end
 ```bash
   # Enter front-end directory:
   $ cd frontend
@@ -139,6 +146,7 @@ git clone https://github.com/matheuslenke/GameCenter.git
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+<div id="usage"> </div>
 
 <!-- USAGE EXAMPLES -->
 ## 📲 Usage
@@ -160,6 +168,8 @@ Here you can see some Gifs of how someone would use this app. Some of the featur
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+<div id="file-structure"> </div>
 
 ## 📁 File structure
 
@@ -203,7 +213,7 @@ Project root
 
 ```
 
-
+<div id="contributing"> </div>
 
 <!-- CONTRIBUTING -->
 ## 🤝 Contributing
@@ -219,6 +229,7 @@ If you have a suggestion that would make this app better, please fork the repo a
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<div id="license"> </div>
 
 <!-- LICENSE -->
 ## 🔐 License
@@ -227,21 +238,21 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+<div id="contact"> </div>
 
 <!-- CONTACT -->
 ## ✉️ Contact
 
 
-Matheus Lenke Coutinho - matheus.l.coutinho@edu.ufes.br
+Matheus Lenke Coutinho - matheus.l.coutinho@edu.ufes.br - [Linkedin](https://www.linkedin.com/in/matheus-lenke-coutinho-492a4b15a/) - [Github](https://github.com/matheuslenke)
 
-Igor Wandermurem Dummer - igor.dummer@edu.ufes.br
+Igor Wandermurem Dummer - igor.dummer@edu.ufes.br - [Github](https://github.com/IgorDummer)
 
 Project Link: [https://github.com/matheuslenke/GameCenter](https://github.com/matheuslenke/GameCenter)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+<div id="additional-tools"> </div>
 
 <!-- ACKNOWLEDGMENTS -->
 ## 🔧 Additional tools
