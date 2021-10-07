@@ -19,7 +19,7 @@
   <p align="center">
     Se preferir, leia a documentação em Português
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Portugues</a>
+    <a href="docs/README.PTBR.MD">Portugues</a>
   </p>
   <div>
     <img src="docs/images/Home1.png" alt="Home of the app showing all games the user is playing" width="33%">
