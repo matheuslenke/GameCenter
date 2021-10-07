@@ -17,9 +17,6 @@
   <h3 align="center">Seus jogos no controle</h3>
 
   <p align="center">
-    If you prefer, please access documentation in English
-    <br />
-    <a href="/README.EN.MD">Click here</a>
   </p>
     <div>
     <img src="images/Home1.png" alt="Home of the app showing all games the user is playing" height="700">
