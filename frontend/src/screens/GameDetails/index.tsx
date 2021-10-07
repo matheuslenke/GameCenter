@@ -13,7 +13,7 @@ import { Background } from '../../components/Background';
 import { Game, useGames } from '../../hooks/games';
 import { GameProps } from '../../components/GameProps';
 import { imageCoverUrl } from '../../services/apiIGDB';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GamePlayingStatus } from '../../components/GamePlayingStatus';
 import { GameRating } from '../../components/GameRating';
@@ -30,6 +30,7 @@ export function GameDetails(){
   const { deleteGame } = useGames()
 
   const route = useRoute();
+  const navigation = useNavigation()
   const { gameSelected } = route.params as Params;
 
   const { gameData } = gameSelected;
@@ -45,7 +46,8 @@ export function GameDetails(){
   async function handleDeleteGame() {
     try {
       setLoading(true)
-      deleteGame(gameSelected)
+      await deleteGame(gameSelected)
+      navigation.goBack();
     } catch(error) {
       console.log(error)
     } finally {

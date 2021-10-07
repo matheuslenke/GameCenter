@@ -4,7 +4,7 @@
 #spring.data.mongodb.username=root
 #spring.data.mongodb.password=gamecenter
 #spring.data.mongodb.uri=mongodb+srv://admin:gamecenter@cluster0.0g1ue.mongodb.net/mygrocerylist?retryWrites=true&w=majority
-#spring.data.mongodb.database=mygrocerylist
+#spring.data.mongodb.database=mydatabase
 spring:
   data:
     mongodb:

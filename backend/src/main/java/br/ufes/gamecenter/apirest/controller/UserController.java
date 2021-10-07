@@ -1,7 +1,10 @@
 package br.ufes.gamecenter.apirest.controller;
 
+import br.ufes.gamecenter.apirest.model.Game;
 import br.ufes.gamecenter.apirest.model.User;
+import br.ufes.gamecenter.apirest.repository.GameRepository;
 import br.ufes.gamecenter.apirest.repository.UserRepository;
+import br.ufes.gamecenter.apirest.service.GameService;
 import br.ufes.gamecenter.apirest.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +13,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
     private final UserRepository userRepository;
+    private final GameService gameService;
     private final PasswordEncoder encoder;
 
-    public UserController(UserRepository repository, PasswordEncoder encoder) {
+    public UserController(UserRepository repository, PasswordEncoder encoder, GameService service) {
         this.userRepository = repository;
+        this.gameService = service;
         this.encoder = encoder;
     }
 
@@ -27,7 +34,10 @@ public class UserController {
     public ResponseEntity<Object> listOne(Authentication authentication) {
         Optional<User> user = userRepository.findByLogin(authentication.getPrincipal().toString());
 
+
         if (!user.isEmpty()) {
+            List<Game> games = gameService.getAllGamesByUser(user.get());
+            user.get().setGames(games);
             return ResponseEntity.ok(user.get());
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado!");

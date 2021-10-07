@@ -7,7 +7,7 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 
 import { GameCard } from '../../components/GameCard';
-import { Game, GameData } from '../../hooks/games';
+import { GameData } from '../../hooks/games';
 
 
 import { apiIGDB } from '../../services/apiIGDB';

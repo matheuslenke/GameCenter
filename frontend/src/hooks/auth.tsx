@@ -7,19 +7,11 @@ import React,
   useEffect
 } from 'react'
 
-import { makeRedirectUri, useAuthRequest, AuthSessionResult, startAsync } from 'expo-auth-session';
+import { AuthSessionResult, startAsync } from 'expo-auth-session';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const { SCOPE } = process.env;
-const { CLIENT_ID } = process.env;
-const { CDN_IMAGE } = process.env;
-const { REDIRECT_URI } = process.env;
-const { RESPONSE_TYPE } = process.env;
-
-// import { api } from '../services/api';
 import { COLLECTION_GAMES, COLLECTION_USERS } from '../config/database';
-import { twitchApi, twitchClientId } from '../services/twitchApi'
-import { makeUrl } from 'expo-linking';
+import { twitchApi} from '../services/twitchApi'
 import { Alert } from 'react-native';
 import { api } from '../services/api';
 import { useGames } from './games';
@@ -73,22 +65,6 @@ type TwitchUserResponse = {
     profile_image_url: string;
     login: string;
   }[]
-}
-
-type LocalApiRegisterResponse = {
-  data: {
-    id: string;
-    login: string;
-    epicCode: string;
-    nintendoSwitchCode: string;
-    psnCode: string;
-    steamCode: string;
-    xboxCode: string;
-  }
-}
-
-type LocalApiSignInResponse = {
-
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -174,7 +150,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         const userData = await getTwitchUserInformation(params.access_token) as User
 
         signInLocalAPI(userData)
-        // loadGamesFromGameCenter()
       }
     } catch ( error ) {
       throw new Error('Erro ao fazer a autenticação.');
