@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +31,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private List<Game> games;
+
+    public User(String login, String password) {
+        this.id = UUID.randomUUID().toString();
+        this.login = login;
+        this.password = password;
+    }
 
     public List<Game> getGames() {
         return this.games;
@@ -61,8 +68,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-
 
 }

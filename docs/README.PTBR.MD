@@ -110,6 +110,7 @@ Clone o repositório
 ```sh
 git clone https://github.com/matheuslenke/GameCenter.git
 ```
+Para configurar o MongoDB, vá para `backend/src/main/resources/application.yml` e modifique os parâmetros. Você também precisa modificar em `backend/src/test/resources/application.yml` os parâmetros apontando para a database de testes
 
 ### ⚙️ Inicializando Back-end
 ```bash
@@ -120,6 +121,7 @@ git clone https://github.com/matheuslenke/GameCenter.git
   # Rode a aplicação
   $ mvn spring-boot:run
 ```
+Primeiro, crie um arquivo chamado `.env` na raiz da pasta frontend, copie o conteúdo de `.env.example` e preencha as variáveis de ambiente
 
 ### 📱 Inicializando Front-end
 ```bash

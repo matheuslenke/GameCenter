@@ -123,15 +123,24 @@ Clone the repo
 git clone https://github.com/matheuslenke/GameCenter.git
 ```
 
+
+To configure the MongoDB URI, go to `backend/src/main/resources/application.yml` and change the parameters. You also need to change in `backend/src/test/resources/application.yml` to change the parameters to the test database
+
 ### ⚙️Initializing Back-end
 ```bash
   # Enter back-end directory:
   $ cd backend
   # Install the dependencies:
   $ mvn install
+  # Run tests:
+  $ mvn test
   # Run Application:
   $ mvn spring-boot:run
 ```
+
+
+First, you need to create a `.env` file at the frontend folder, copy the contents from `.env.example` and fill the needed environment variables.
+
 
 ### 📱Initializing Front-end
 ```bash
